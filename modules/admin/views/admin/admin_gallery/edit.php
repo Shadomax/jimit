@@ -53,7 +53,7 @@
                   </div><!-- /.box-body -->
                   <div class="box-footer">
                   	<a href="<?=URL::site('admin/gallery')?>" class="btn btn-default" role="button">Cancel</a>
-                    <button type="submit" class="btn btn-info pull-right">Save</button>
+                    <button type="submit" class="btn btn-info pull-right">Update</button>
                   </div><!-- /.box-footer -->
                 </form>
               </div><!-- /.box -->

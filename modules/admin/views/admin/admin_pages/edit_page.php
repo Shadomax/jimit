@@ -2,7 +2,7 @@
         <section class="content-header">
           <h1>
             Admin Edit Page
-            <small>Use these section to manage your page content.</small>
+            <small>Use this section to edit english page content.</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=url::site('admin/dashboard')?>"><i class="fa fa-dashboard"></i> Admin</a></li>
@@ -23,9 +23,16 @@
                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
                   <div class="box-body">
                     <div class="form-group">
-                      <label for="title" class="col-sm-2 control-label">Page Name</label>
+                      <label for="title" class="col-sm-2 control-label">Page Title</label>
                       <div class="col-sm-10">
-                        <input type="text" name="title" class="form-control" value="<?=$page->title?>" id="title" placeholder="Page Name">
+                        <input type="text" name="title" class="form-control" value="<?=$page->title?>" id="title" placeholder="Page Title">
+                      </div>
+                    </div><!-- /.form-group -->
+                    <div class="form-group">
+                      <label for="location" class="col-sm-2 control-label">Video Link</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="location" class="form-control" value="<?=$page->youtube_link?>" id="location" placeholder="Youtube video link if any" />
+                        <label for="location" class="text-warning"><?=Arr::get($errors, 'location'); ?></label>
                       </div>
                     </div><!-- /.form-group -->
                   <div class="form-group">
@@ -49,7 +56,7 @@
                     <label for="file" class="col-sm-2 control-label">Picture</label>
                     <div class="col-sm-10">
                     <label for="file" class="text-warning"><?=Arr::get($errors, 'file')?></label>
-                      <img src="<?=@$page->getPicture()?>" style="width:100px; height:100px;" alt="" class="" />
+                      <img src="<?=@$page->getPicture()?>" style="width:100px; height:100px;" alt="<?=$page->title?>" class="img-thumbnail" />
                       <p class="help-block">Change:</p>
                       <input class="form-control" type="file" id="file" name="file">
                     </div>
@@ -75,7 +82,7 @@
                   </div><!-- /.box-body -->
                   <div class="box-footer">
                     <a href="<?=URL::site('admin/pages')?>" class="btn btn-default" role="button">Cancel</a>
-                    <button type="submit" class="btn btn-info pull-right">Save</button>
+                    <button type="submit" class="btn btn-info pull-right">Update</button>
                   </div><!-- /.box-footer -->
                 </form>
               </div><!-- /.box -->

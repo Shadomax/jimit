@@ -1,4 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access');
+Route::set('admin-pages', 'admin/pages(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+	->defaults(array(
+			'directory'		=> 'admin',
+			'controller'	=> 'Page',
+			'action'		=> 'index',
+		));
 
 Route::set('admin-team', 'admin/teams(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
 	->defaults(array(
@@ -7,17 +13,17 @@ Route::set('admin-team', 'admin/teams(/<action>(/<id>(/<optional>)))', array('id
 			'action'		=> 'index',
 		));
 
-Route::set('admin-partners', 'admin/partner(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+Route::set('admin-partners', 'admin/partners(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
 	->defaults(array(
 			'directory'		=> 'admin',
-			'controller'	=> 'partners',
+			'controller'	=> 'Partner',
 			'action'		=> 'index',
 		));
 
-Route::set('admin-faqs', 'admin/faqs(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+Route::set('admin-programs', 'admin/programs(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
 	->defaults(array(
 			'directory'		=> 'admin',
-			'controller'	=> 'faqs',
+			'controller'	=> 'Program',
 			'action'		=> 'index',
 		));
 
@@ -29,7 +35,7 @@ Route::set('admin-galleries', 'admin/gallery(/<action>(/<id>(/<optional>)))', ar
 			'id'			=> 'id',
 		));
 
-Route::set('admin-categories', 'admin/categories(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+Route::set('admin-category', 'admin/category(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
 	->defaults(array(
 			'directory'		=> 'admin',
 			'controller'	=> 'Category',
@@ -61,10 +67,10 @@ Route::set('admin-articles', 'admin/articles(/<action>(/<id>(/<optional>)))', ar
 			'id'			=> 'id',
 		));
 
-Route::set('admin-types', 'admin/types(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+Route::set('admin-certificates', 'admin/certificates(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
 	->defaults(array(
 			'directory'		=> 'admin',
-			'controller'	=> 'Type',
+			'controller'	=> 'Certificate',
 			'action'		=> 'index',
 			'id'			=> 'id',
 		));
@@ -73,6 +79,14 @@ Route::set('admin-programs', 'admin/programs(/<action>(/<id>(/<optional>)))', ar
 	->defaults(array(
 			'directory'		=> 'admin',
 			'controller'	=> 'Program',
+			'action'		=> 'index',
+			'id'			=> 'id',
+		));
+
+Route::set('admin-sliders', 'admin/sliders(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+	->defaults(array(
+			'directory'		=> 'admin',
+			'controller'	=> 'Slider',
 			'action'		=> 'index',
 			'id'			=> 'id',
 		));

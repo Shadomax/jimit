@@ -143,7 +143,7 @@ Kohana::modules(array(
  * If you have not defined a cookie salt in your Cookie class then
  * uncomment the line below and define a preferrably long salt.
  */
-Cookie::$salt = 'AutoClub GrassRoot Application';
+Cookie::$salt = 'utranazacter7654RRFssrehMedam@3434';
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
@@ -163,9 +163,10 @@ Route::set('french', 'home-french(/<action>(/<id>(/<optional>)))', array('id' =>
 			'index'			=> 'index',
 		));*/
 
-Route::set('default', '(<controller>(/<action>(/<id>)))')
+Route::set('default', '(<controller>(/<action>(/<id>(/<optional>))))', array('id' => '[0-9]++', 'optional' => '.*'))
 	->defaults(array(
-		'controller' => 'welcome',
+		'directory'		=> 'En',
+		'controller' => 'Welcome',
 		'action'     => 'index',
 	));
 

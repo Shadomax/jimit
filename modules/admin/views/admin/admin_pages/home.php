@@ -2,7 +2,7 @@
         <section class="content-header">
           <h1>
             Admin Pages
-            <small>Use the page section to manage your website pages.</small>
+            <small>Use this section to manage pages.</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=url::site('admin/dashboard')?>"><i class="fa fa-dashboard"></i> Admin</a></li>
@@ -20,10 +20,17 @@
               <span class="text-danger">No Pages to display</span>
             <?php endif; ?> 
                 </div><!-- /.box-header -->
+                <?php if (!empty($message)) :?>
+                  <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <?=$message?>
+                  </div>
+                <?php endif;?>
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
+                        <th>#</th>
                         <th>Title</th>
                         <th>Date</th>
                         <th>Content</th>
@@ -32,19 +39,21 @@
                     </thead>
                     <tbody>
                       <?php
-                      foreach ($pages as $key => $p) : ?>
+                      foreach ($pages as $page) : ?>
                     <tr>
-                      <td><?=$p->title?></td>
-                      <td><?=Date('D-M',$p->date_added)?></td>
-                      <td><?=Text::limit_words($p->content,10)?></td>
+                      <td><?=$page->id?></td>
+                      <td><?=$page->title?></td>
+                      <td><?=Date('D-M',$page->datetime)?></td>
+                      <td><?=Text::limit_words($page->content,10)?></td>
                       <td>
-                        <a class="btn btn-primary" type="button" href="<?=URL::site('admin/pages/edit').'/'.$p->id.'/'.URL::title($p->title,'_')?>">Edit En</a> | <a class="btn btn-success" type="button" href="<?=URL::site('admin/pages/fr_edit').'/'.$p->id.'/'.URL::title($p->title,'_')?>">Edit Fr</a> | <a class="btn btn-info" type="button" href="<?=URL::site('admin/pages/es_edit').'/'.$p->id.'/'.URL::title($p->title,'_')?>">Edit Es</a> | <a class="btn btn-danger del_page" data-id="<?=$p->id?>" type="button" href="" data-toggle="modal">Delete</a>
+                        <a class="btn btn-primary" type="button" href="<?=URL::site('admin/pages/edit').'/'.$page->id.'/'.URL::title($page->title,'_')?>">Edit En</a> | <a class="btn btn-success" type="button" href="<?=URL::site('admin/pages/fr_edit').'/'.$page->id.'/'.URL::title($page->title,'_')?>">Edit Fr</a> | <a class="btn btn-danger delete_item" type="button" href="<?=URL::site('admin/pages/delete').'/'.$page->id?>" data-toggle="modal">Delete</a>
                       </td>
                     </tr>
                   <?php endforeach;?>
                     </tbody>
                     <tfoot>
                       <tr>
+                        <th>#</th>
                         <th>Title</th>
                         <th>Date</th>
                         <th>Content</th>
@@ -71,7 +80,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">No</button>
-                    <a href="" type="button" id="confirm" class="btn btn-outline">Yes</a>
+                    <a href="" type="button" id="confirm-delete" class="btn btn-outline">Yes</a>
                   </div>
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->

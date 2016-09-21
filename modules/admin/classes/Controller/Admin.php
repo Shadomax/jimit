@@ -38,13 +38,19 @@ class Controller_Admin extends Controller_Authenticated
             //check if the user account as been confirmed
             $notexist = $user->username_available($post['username']);
             if ($notexist) {
-                Auth::instance()->login($post['username'], $post['password']);
-                if (Auth::instance()->logged_in()) {
-                    //get the user details if they are logged in
-                    $this->redirect('admin/dashboard', 302);
+                $deleted = ORM::factory('User')->where('username', '=', $post['username'])->find();
+                if ($deleted->deleted == 'true') {
+                    $error = "Sorry your account has been deleted.";
+                    View::factory()->set_global('error', $error);
                 } else {
-                    $warning = "<strong>WARNING!!</strong> <br />Incorrect password!!!";
-                    View::factory()->set_global('warning', $warning);
+                    Auth::instance()->login($post['username'], $post['password']);
+                    if (Auth::instance()->logged_in()) {
+                        //get the user details if they are logged in
+                        $this->redirect('admin/dashboard', 302);
+                    } else {
+                        $warning = "<strong>WARNING!!</strong> <br />Incorrect password!!!";
+                        View::factory()->set_global('warning', $warning);
+                    }
                 }
             } else {
                 $error = "there is no user with that username in our system";

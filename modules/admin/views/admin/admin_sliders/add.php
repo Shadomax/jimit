@@ -1,13 +1,13 @@
 <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Admin Add Slider
-            <small>Use these section to manage your slider content.</small>
+            Admin Add Slide
+            <small>Use this section to add new slide.</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=url::site('admin/dashboard')?>"><i class="fa fa-dashboard"></i> Admin</a></li>
             <li><a href="<?=url::site('admin/sliders')?>">Sliders</a></li>
-            <li class="active">Add Slider</li>
+            <li class="active">Add Slide</li>
           </ol>
         </section>
 <section class="content">
@@ -16,22 +16,28 @@
 			<!-- Horizontal Form -->
               <div class="box box-info">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Slider Add Form</h3>
+                  <h3 class="box-title">Slide Add Form</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
                   <div class="box-body">
+                    <center><p class="help-block">Fill the form below. Fields with <span class="text-danger">*</span> are required.</p></center>
+                    <?php if (!empty($errors)): ?>
+                        <div class="alert alert-warning fade in">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <strong>Warning! </strong>Some errors were encountered, please check the details you entered.
+                        </div>
+                    <?php endif ?>
                     <div class="form-group">
-                      <label for="title" class="col-sm-2 control-label">Slider Name</label>
+                      <label for="header" class="col-sm-2 control-label">Header <span class="text-danger">*</span></label>
                       <div class="col-sm-10">
-                      <label for="title" class="text-warning"><?= Arr::get($errors, 'title'); ?></label>
-                        <input type="text" class="form-control" name="title" value="<?=@Arr::get($values, 'title')?>" id="title" placeholder="Slider Name">
+                        <input type="text" class="form-control" name="header" value="<?=@Arr::get($values, 'header')?>" id="header" placeholder="Slide Header">
+                        <label for="haeder" class="text-warning"><?= Arr::get($errors, 'header'); ?></label>
                       </div>
                     </div><!-- /.form-group -->
-                  <!--<div class="form-group">
-                  	<label for="content" class="col-sm-2 control-label">Content</label>
+                  <div class="form-group">
+                  	<label for="content" class="col-sm-2 control-label">Content <span class="text-danger">*</span></label>
                   	<div class="col-sm-10">
-                    <label for="content" class="text-warning"><?= Arr::get($errors, 'content'); ?></label>
                   		<div class="box">
 			                <div class="box-header">
 			                  <div class="pull-right box-tools">
@@ -43,20 +49,28 @@
 			                    <textarea class="wysiwygtextarea" name="content" placeholder="Place your slider content here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?=@Arr::get($values, 'content')?></textarea>
 			                </div>
 			              </div>
+                      <label for="content" class="text-warning"><?= Arr::get($errors, 'content'); ?></label>
                   	</div>
-                  </div> /.form-group -->
+                  </div> <!-- /.form-group -->
                   <div class="form-group">
-                  	<label for="file" class="col-sm-2 control-label">Picture</label>
+                    <label for="location" class="col-sm-2 control-label">Link</label>
+                    <div class="col-sm-10">
+                      <input type="link" class="form-control" name="location" value="<?=@Arr::get($values, 'location')?>" id="location" placeholder="Slide read more button (e.g www.jimit.dev/en/about)">
+                      <label for="location" class="text-warning"><?= Arr::get($errors, 'location'); ?></label>
+                    </div>
+                  </div><!-- /.form-group -->
+                  <div class="form-group">
+                  	<label for="file" class="col-sm-2 control-label">Picture <span class="text-danger">*</span></label>
                   	<div class="col-sm-10">
-                    <label for="file" class="text-warning"><?= Arr::get($errors, 'file'); ?></label>
                   		<input class="form-control" type="file" id="file" name="file" />
+                      <label for="file" class="text-warning"><?= Arr::get($errors, 'file'); ?></label>
                   	</div>
                   </div><!-- /.form-group -->
                   <div class="form-group">
-                  	<label for="sort" class="col-sm-2 control-label">Sort Order</label>
+                  	<label for="sort" class="col-sm-2 control-label">Sort <span class="text-danger">*</span></label>
                   	<div class="col-sm-10">
-                    <label for="sort" class="text-warning"><?= Arr::get($errors, 'sort'); ?></label>
                   		<input class="form-control" type="number" id="sort" name="sort" value="<?=@Arr::get($values, 'sort')?>">
+                      <label for="sort" class="text-warning"><?= Arr::get($errors, 'sort'); ?></label>
                   	</div>
                   </div><!-- /.form-group -->
                  

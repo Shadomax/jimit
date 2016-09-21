@@ -13,32 +13,32 @@
   if ($nude == 'Event') {
     $event = 'true';
   }
-  if ($nude == 'Pages') {
+  if ($nude == 'Page') {
     $pages = 'true';
   }
   if ($nude == 'Gallery') {
     $gallery = 'true';
   }
-  if ($nude == 'Portfolio_category') {
-    $portfolio = 'true';
+  if ($nude == 'Partner') {
+    $partners = 'true';
   }
   if ($nude == 'Services') {
     $services = 'true';
   }
-  if ($nude == 'Sliders') {
+  if ($nude == 'Slider') {
     $sliders = 'true';
   }
   if ($nude == 'User') {
     $users = 'true';
   }
-  if ($nude == 'Lounges') {
-    $lounges = 'true';
+  if ($nude == 'Category') {
+    $articles = 'true';
   }
-  if ($nude == 'Suites') {
-    $suites = 'true';
+  if ($nude == 'Article') {
+    $articles = 'true';
   }
-  if ($nude == 'Accommodations') {
-    $accommodation = 'true';
+  if ($nude == 'Certificate') {
+    $programs = 'true';
   }
   if ($nude == 'Team') {
     $teams = 'true';
@@ -353,7 +353,36 @@
             <li><a href="<?=URL::site('admin/users/viewDeleted')?>"><i class="fa fa-circle-o"></i> View Deleted</a></li>
           </ul>
         </li>
-        <li class="treeview <?=(isset($member)) ? 'active' : ''?>">
+        <li class="treeview <?=(isset($sliders)) ? 'active' : '' ;?>">
+          <a href="#">
+            <i class="fa fa-table"></i> <span>Slider</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?=URL::site('admin/sliders')?>"><i class="fa fa-circle-o"></i> List Sliders</a></li>
+            <li><a href="<?=URL::site('admin/sliders/add')?>"><i class="fa fa-circle-o"></i> Add Slider</a></li>
+            <li><a href="<?=URL::site('admin/sliders/viewDeleted')?>"><i class="fa fa-circle-o"></i> View Deleted</a></li>
+          </ul>
+        </li>
+        <li class="treeview <?=(isset($programs)) ? 'active' : '' ;?>">
+          <a href="#">
+            <i class="fa fa-table"></i> <span>Programs</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="<?=URL::site('admin/certificates')?>"><i class="fa fa-circle-o"></i> List Certificates</a></li>
+            <li><a href="<?=URL::site('admin/certificates/add')?>"><i class="fa fa-circle-o"></i> Add Certificate</a></li>
+            <li><a href="<?=URL::site('admin/certificates/viewDeleted')?>"><i class="fa fa-circle-o"></i> Deleted Certificates</a></li>
+            <li><a href="<?=URL::site('admin/programs')?>"><i class="fa fa-circle-o"></i> List Programs</a></li>
+            <li><a href="<?=URL::site('admin/programs/add')?>"><i class="fa fa-circle-o"></i> Add Program</a></li>
+            <li><a href="<?=URL::site('admin/programs/viewDeleted')?>"><i class="fa fa-circle-o"></i> Deleted Programs</a></li>
+          </ul>
+        </li>
+        <li class="treeview <?=(isset($articles)) ? 'active' : ''?>">
           <a href="#">
             <i class="fa fa-pie-chart"></i>
             <span>Articles</span>
@@ -400,7 +429,7 @@
             <li><a href="<?=URL::site('admin/gallery/viewDeleted')?>"><i class="fa fa-circle-o"></i> View Deleted</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview <?=(isset($pages)) ? 'active' : '' ;?>">
           <a href="#">
             <i class="fa fa-table"></i> <span>Pages</span>
             <span class="pull-right-container">
@@ -413,7 +442,7 @@
             <li><a href="<?=URL::site('admin/pages/viewDeleted')?>"><i class="fa fa-circle-o"></i> View Deleted</a></li>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview <?=(isset($partners)) ? 'active' : '' ;?>">
           <a href="#">
             <i class="fa fa-envelope"></i> <span>Partners</span>
             <span class="pull-right-container">

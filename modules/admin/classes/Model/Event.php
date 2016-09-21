@@ -9,13 +9,16 @@
  */
 class Model_Event extends ORM
 {
+	protected $_has_many = array(
+            'comments' => array('model' => 'Event_Comment'),
+        );
 	
 	public function getPicture()
 	{
 		if (empty($this->photo)) {
 			return "http://placehold.it/100x100";
 		} else {
-			return url::base().'media/upload/events/'.$this->photo;
+			return url::base().'media/uploads/events/'.$this->photo;
 		}
 	}
 

@@ -6,7 +6,7 @@
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=url::site('admin/dashboard')?>"><i class="fa fa-dashboard"></i> Admin</a></li>
-            <li><a href="<?=url::site('admin/dashboard')?>"> Events</a></li>
+            <li><a href="<?=url::site('admin/events')?>"> Events</a></li>
             <li class="active">All Comments</li>
           </ol>
         </section>

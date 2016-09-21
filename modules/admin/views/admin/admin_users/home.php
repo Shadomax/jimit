@@ -1,8 +1,8 @@
 <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Administration Users
-            <small>Use these users section to manage your admin users.</small>
+            Admin Users
+            <small>Use this section to manage users.</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=url::site('admin/dashboard')?>"><i class="fa fa-dashboard"></i> Admin</a></li>
@@ -20,40 +20,43 @@
               <span class="text-info">No Users to display</span>
             <?php endif;?>
                 </div><!-- /.box-header -->
+                <?php if (!empty($message)) :?>
+                  <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <?=$message?>
+                  </div>
+                <?php endif;?>
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
+                        <th>#</th>
                         <th>Username</th>
-                        <th>Date</th>
-                        <th>Status</th>
                         <th>Email</th>
+                        <th>Date/Time</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
-                        foreach ($users as $key => $u) : ?>
+                        foreach ($users as $user) : ?>
                       <tr>
-                        <td><?=$u->username?></td>
-                        <td><?=Date('D-M',$u->last_login)?></td>
-                        <td><span class="label <?=$u->status == 1 ? 'label-success' : 'label-warning';?>"><?php if ($u->status == 1) {
-                          echo "Active";
-                        } else{echo "Deactivated";} ?></span></td>
-                        <td><?=$u->email?></td>
+                        <td><?=$user->id?></td>
+                        <td><?=$user->username?></td>
+                        <td><?=$user->email?></td>
+                        <td><?=Date('D-M-Y',$user->datetime)?></td>
                         <td>
-                          <a class="btn <?=($u->status == 1) ? 'btn-warning' : 'btn-success' ;?>" type="button" href="<?=($u->status == 1) ? URL::site('admin/users/deactivate').'/'.$u->id : URL::site('admin/users/activate').'/'.$u->id ;?>"><?=($u->status == 1) ? 'Deactivate' : 'Activate' ;?></a>
-                          <a class="btn btn-primary" type="button" href="<?=URL::site('admin/users/edit').'/'.$u->id.'/'.URL::title($u->username,'_')?>">Edit</a> | <a class="btn btn-danger del_user" data-id="<?=$u->id?>" type="button" data-toggle="modal">Delete</a>
+                          <a class="btn btn-primary" type="button" href="<?=URL::site('admin/users/edit').'/'.$user->id.'/'.URL::title($user->username, '_')?>">Edit</a> | <a class="btn btn-success" type="button" href="<?=URL::site('admin/users/changePassword').'/'.$user->id.'/'.URL::title($user->username, '_')?>">Change Password</a> | <a class="btn btn-danger delete_item" type="button" href="<?=URL::site('admin/users/delete').'/'.$user->id?>" data-toggle="modal">Delete</a>
                         </td>
                       </tr>
                     <?php endforeach;?>
                     </tbody>
                     <tfoot>
                       <tr>
+                        <th>#</th>
                         <th>Username</th>
-                        <th>Date</th>
-                        <th>Status</th>
                         <th>Email</th>
+                        <th>Date/Time</th>
                         <th>Action</th>
                       </tr>
                     </tfoot>
@@ -62,7 +65,9 @@
               </div><!-- /.box -->
             </div>
           </div>
-           <div  class="example-modal">
+</section><!-- /.content -->
+
+<div  class="example-modal">
             <div id="delete" class="modal fade in modal-danger" role="dialog">
               <div class="modal-dialog">
                 <div class="modal-content">
@@ -75,10 +80,9 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">No</button>
-                    <button type="button" id="confirm" class="btn btn-outline">Yes</button>
+                    <a type="button" id="confirm-delete" class="btn btn-outline">Yes</a>
                   </div>
                 </div><!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
           </div><!-- /.example-modal -->
-</section><!-- /.content -->

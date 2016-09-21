@@ -20,6 +20,12 @@
               <span class="text-danger">No Photos to display</span>
             <?php endif;?>
                 </div><!-- /.box-header -->
+                <?php if (!empty($message)) :?>
+                  <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <?=$message?>
+                  </div>
+                <?php endif;?>
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>

@@ -76,8 +76,8 @@
                   <div class="form-group">
                     <label for="file" class="col-sm-2 control-label">Picture</label>
                     <div class="col-sm-10">
-                    <label for="file" class="text-warning"><?=Arr::get($errors, 'file'); ?></label>
                       <input class="form-control" type="file" value="<?=Arr::get($values, 'file'); ?>" id="file" name="file">
+                      <label for="file" class="text-warning"><?=Arr::get($errors, 'file'); ?></label>
                     </div>
                   </div><!-- /.form-group -->
                   <div class="form-group">

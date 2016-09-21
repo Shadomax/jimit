@@ -32,7 +32,7 @@ class Controller_Admin_Dashboard extends Controller_Authenticated
 			->bind('partners', $partners);
 
 		$users = ORM::factory('User')->where('deleted', '=', 'false')->count_all();
-		$programs = ORM::factory('Type_Program')->where('deleted', '=', 'false')->count_all();
+		$programs = ORM::factory('Certificate_Program')->where('deleted', '=', 'false')->count_all();
 		$articles = ORM::factory('Category_Article')->where('deleted', '=', 'false')->count_all();
 		$events = ORM::factory('Event')->where('deleted', '=', 'false')->count_all();
 		$partners = ORM::factory('Partner')->where('deleted', '=', 'false')->count_all();

@@ -86,7 +86,7 @@ class Controller_Admin_Event extends Controller_Authenticated
 		$message = Session::instance()->get_once('message');
 		$count = ORM::factory('Event_Comment')->where('deleted', '=', 'false')->count_all();
 		$this->template->user = $user;
-		$this->template->title = "Admin Events Comments ";
+		$this->template->title = "Admin Event Comments ";
 		$this->template->content = $view;
 	}
 
@@ -107,7 +107,6 @@ class Controller_Admin_Event extends Controller_Authenticated
 			//lets validate the the posted data for correctness
 			$validate = Model_Event::getValidate($data);
 			if ($validate->check()) {
-					try {
 						//if there were files uploaded, validate them
 		                if ($_FILES['file']['size'] > 0) {
 		                    $valFiles = Model_Event::validatePhoto($_FILES);
@@ -132,15 +131,15 @@ class Controller_Admin_Event extends Controller_Authenticated
 		                        $errors = $valFiles->errors('general');
 		                    }
 		                }
-						$event->create_event($data);
-						//French event creation function call
-						$event_fr->create_event($data);
-						$message = "<strong>SUCCESS!!</strong><br/> The event has been added successfully created.<br /> Edit the form below for French display.";
-						Session::instance()->set('message', $message);
-						$this->redirect('admin/events/fr_edit'.'/'.$event->id);
-					} catch (ORM_Validation_Exception $e) {
-						$errors = $e->errors('general');
-					}
+						
+						if (empty($errors)) {
+							$event->create_event($data);
+							//French event creation function call
+							$event_fr->create_event($data);
+							$message = "<strong>SUCCESS!!</strong><br/> The event has been added successfully.<br /> Edit the form below for French display.";
+							Session::instance()->set('message', $message);
+							$this->redirect('admin/events/fr_edit'.'/'.$event->id);
+						}
 			} else {
 				$errors = $validate->errors('general');
 			}
@@ -150,62 +149,70 @@ class Controller_Admin_Event extends Controller_Authenticated
 		$this->template->content = $view;
 	}
 
-	//lets create edit event action
 	public function action_edit($id = '')
 	{
 		$this->template->title = "Admin Edit Event ";
-		$event_id = $this->request->param('id');
+		$id = $this->request->param('id');
 		$user = Auth::instance()->get_user();
 		$this->template->user = $user;
-		$view = View::factory('admin/admin_events/edit_event')
+		$view = view::factory('admin/admin_events/edit_event')
 			->bind('event', $event)
-			->bind('user', $user)
+			->set('user', $user)
 			->bind('errors', $errors);
-		$event = ORM::factory('Event')->where('id', '=', $event_id)->find();
+		$event = ORM::factory('Event')->where('id', '=', $id)->find();
+		$event_fr = ORM::factory('Eventfr', $id);
 		if ($this->request->post()) {
-			//lets assign the posted data to a variable @var data
-			$data = $this->request->post();
-			//lets validate the the posted data for correctness
-			$validate = Model_Event::getValidate($data);
-			if ($validate->check()) {
-				try {
-					//if there were files uploaded, validate them
-		                if ($_FILES['file']['size'] > 0) {
-		                    $valFiles = Model_Event::validatePhoto($_FILES);
-		                    if ($valFiles->check()) {
-		                    	$image = $_FILES['file'];
-								$directory = Upload::$default_directory.'events/';
-								if ($file = Upload::save($image))
-						        {
-						        	$filename = 'event_'. uniqid(). '_' . $_FILES['file']['name'];
-									$filename = str_replace(" ", "_", $filename);
+				$data = array_merge($_POST, $_FILES);
+				$validate = Validation::factory($data)
+					->rule('name', 'not_empty')
+					->rule('date', 'not_empty')
+					->rule('time', 'not_empty')
+					->rule('location', 'not_empty')
+					->rule('content', 'not_empty')
+					->rule('sort', 'not_empty');
+				if ($validate->check()) {
+					if ($_FILES['file']['size'] > 0) {
+						$valFiles = Validation::factory($data)
+							->rule('file', 'Upload::not_empty')
+				            ->rule('file', 'Upload::size', array(':value', '4M'))
+				            ->rule('file', 'Upload::type', array(':value', array('jpeg','jpg','png','gif')))
+				            ->rule('file', 'Upload::valid');
+				        if ($valFiles->check()) {
+				         	$image = $_FILES['file'];
+							$directory = Upload::$default_directory.'events/';
+							//lets update the picture of the service
+							if ($file = Upload::save($image))
+					        {
+					        	$filename = 'event_'. uniqid(). '_' . $_FILES['file']['name'];
+								$filename = str_replace(" ", "_", $filename);
 
-						            Image::factory($file)
-						                ->save($directory.$filename);
+					            Image::factory($file)
+					                ->save($directory.$filename);
 
-						            //save the file in db
-						            $data['photo'] = $filename;
-						            $event->update_photo($data);
-						            $event_fr->update_photo($data);
-						 
-						            // Delete the temporary file
-						            unlink($file);
-						        }
-		                    } else {
-		                        $errors = $valFiles->errors('general');
-		                    }
-		                }
-					$event->update_event($data);
-					$message = "<strong>SUCCESS!!</strong><br/> The event information has been successfully updated.";
-					Session::instance()->set('message', $message);
-					$this->redirect('admin/events');
-				} catch (ORM_Validation_Exception $e) {
-					$errors = $e->errors('general');
+					            //save the file in db
+						        $data['photo'] = $filename;
+						        $event->update_photo($data);
+						        $event_fr->update_photo($data);
+					 
+					            // Delete the temporary file
+					            unlink($file);
+					        }
+				         } else {
+				         	$errors = $valFiles->errors('general');
+				         }
+					}
+					
+					if (empty($errors)) {
+						$event->update_event($data);
+	                    $message = "<strong>SUCCESS!!</strong><br/> The event information has been successfully updated.";
+	                    Session::instance()->set('message', $message);
+						$this->redirect('admin/events');
+					}
+						
+				} else {
+					$errors = $validate->errors('general');
 				}
-			} else {
-				$errors = $validate->errors('general');
 			}
-		}
 		//display the edit form
 		$this->template->content = $view; 
 	}

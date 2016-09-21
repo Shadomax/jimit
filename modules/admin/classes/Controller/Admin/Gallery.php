@@ -147,10 +147,12 @@ class Controller_Admin_Gallery extends Controller_Authenticated
 		                        $errors = $valFiles->errors('general');
 		                    }
 		                }
-					$gallery->update_data($data);
-					$message = "<strong>SUCCESS!!</strong><br/> The photo information has been successfully updated.";
-					Session::instance()->set('message', $message);
-					$this->redirect('admin/gallery');
+					if (empty($errors)) {
+						$gallery->update_data($data);
+						$message = "<strong>SUCCESS!!</strong><br/> The photo information has been successfully updated.";
+						Session::instance()->set('message', $message);
+						$this->redirect('admin/gallery');
+					}
 				} catch (ORM_Validation_Exception $e) {
 					$errors = $e->errors('general');
 				}
@@ -164,17 +166,19 @@ class Controller_Admin_Gallery extends Controller_Authenticated
 	//photo delete action
 	public function action_delete($id = '')
 	{
+		Auth::instance()->get_user();
 		$this->auto_render = false;
 		$id = $this->request->param('id');
 		$gallery = ORM::factory('Gallery')->where('id', '=', $id)->find();
-		if ($gallery->delete()) {
+		$gallery->deleted = 'true';
+		if ($gallery->save()) {
 			$success = '<strong>SUCCESS!!</strong><br> The photo has been deleted successfully.';
 			Session::instance()->set('message', $success);
-			$this->redirect('admin/gallery/viewDeleted');
+			$this->redirect('admin/gallery');
 		} else {
 			$errors = '<strong>SORRY!!</strong><br > Unable to delete the photo. Please Try Again Later...';
 			Session::instance()->set('message', $errors);
-			$this->redirect('admin/gallery/viewDeleted');
+			$this->redirect('admin/gallery');
 		}
 	}
 
@@ -206,11 +210,11 @@ class Controller_Admin_Gallery extends Controller_Authenticated
 		$id = $this->request->param('id');
 		$gallery = ORM::factory('Gallery')->where('id', '=', $id)->find();
 		if ($gallery->delete()) {
-			$success = ($this->lang == 'en') ? '<strong>SUCCESS!</strong><br> The member has been permenantly deleted successfully.' : '' ;
+			$success = '<strong>SUCCESS!</strong><br> The photo has been permenantly deleted successfully.';
 			Session::instance()->set('message', $success);
 			$this->redirect('admin/gallery/viewDeleted');
 		} else {
-			$errors = '<strong>SORRY!!</strong><br> Unable to permenantly delete the photo. Please Try Again Later..';
+			$errors = '<strong>SORRY!!</strong><br> Unable to permenantly delete the photo. Please Try Again Later...';
 			Session::instance()->set('message', $errors);
 			$this->redirect('admin/gallery/viewDeleted');
 		}

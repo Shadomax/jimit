@@ -2,7 +2,7 @@
 /**
  * Default article model
  *
- * @package    Jimit/Category Article
+ * @package    Admin/Category Article
  * @author     Afrovision Group
  * @copyright  (c) 2016-2017 Afrovision Group
  * @license    http://www.afrovisiongroup.com/license.html
@@ -15,29 +15,59 @@ class Model_Category_Article extends ORM
 		'category' => array('model' => 'Category'),
 	);
 
+	protected $_has_many = array(
+            'comments' => array('model' => 'Article_Comment'),
+        );
+
 	public function labels()
 	{
 		return array();
 	}
 
-	//get the cell member role
-	public function getRole($cell = '', $member = '')
+	public function getPicture()
 	{
-		return ORM::factory('Cell_Member')->where('member_id', '=', $member)->and_where('cell_id', '=', $cell)->find()->role;
+		if (empty($this->photo)) {
+			return "http://placehold.it/100x100";
+		} else {
+			return url::base().'media/uploads/articles/'.$this->photo;
+		}
 	}
 
-	//get leaders
-	public static function getLeader($cell = '')
+	//add article
+	public function addArticle($data)
 	{
-		return ORM::factory('Cell_Member')->where('cell_id', '=', $cell)->and_where('role', '=', 'leader')->find();
+		$this->category_id = $data['category'];
+		$this->title = $data['title'];
+		$this->posted_by = $data['post_by'];
+		$this->content = $data['content'];
+		$this->photo = $data['photo'];
+		$this->seo_title = $data['seo_title'];
+		$this->seo_description = $data['seo_description'];
+		$this->seo_keywords = $data['seo_keywords'];
+		$this->deleted = 'false';
+		$this->sort = $data['sort'];
+		$this->datetime = time();
+		return $this->save();
 	}
 
-	//get all members
-	public static function getMembers($cell = '')
+	//update article
+	public function updateArticle($data)
 	{
-		return ORM::factory('Cell_Member')->where('cell_id', '=', $cell)->find_all();
+		$this->category_id = $data['category'];
+		$this->title = $data['title'];
+		$this->posted_by = $data['post_by'];
+		$this->content = $data['content'];
+		$this->seo_title = $data['seo_title'];
+		$this->seo_description = $data['seo_description'];
+		$this->seo_keywords = $data['seo_keywords'];
+		$this->sort = $data['sort'];
+		return $this->save();
 	}
 
-	//get the cell member information
+	public function updatePhoto($data)
+	{
+		$this->photo = $data;
+		return $this->save();
+	}
 	
-} // End BLW Cell Member Model
+} // End Article Model

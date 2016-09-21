@@ -78,7 +78,7 @@
                     <div class="col-sm-10">
                       <img src="<?=@$event->getPicture()?>" class="img-thumbnail" style="width:100px; height:100px" alt="<?=@$event->title?>" />
                       <p class="help-block">Change:</p>
-                      <input class="form-control" type="file" value="" id="file" name="file">
+                      <input class="form-control" type="file" id="file" name="file">
                       <label for="file" class="text-warning"><?=Arr::get($errors, 'file'); ?></label>
                     </div>
                   </div><!-- /.form-group -->

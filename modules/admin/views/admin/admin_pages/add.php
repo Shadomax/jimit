@@ -2,7 +2,7 @@
         <section class="content-header">
           <h1>
             Admin Add Page
-            <small>Use these section to add page content.</small>
+            <small>Use this section to add page content.</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="<?=url::site('admin/dashboard')?>"><i class="fa fa-dashboard"></i> Admin</a></li>
@@ -29,23 +29,22 @@
             </div>
           <?php endif;?>
                     <div class="form-group">
-                      <label for="title" class="col-sm-2 control-label">Page Name</label>
+                      <label for="title" class="col-sm-2 control-label">Page Title</label>
                       <div class="col-sm-10">
-                      <label for="title" class="text-warning"><?=Arr::get($errors, 'title')?></label>
-                        <input type="text" name="title" class="form-control" value="<?=Arr::get($values, 'title')?>" id="title" placeholder="Page Name">
+                        <input type="text" name="title" class="form-control" value="<?=Arr::get($values, 'title')?>" id="title" placeholder="Page Title (e.g Home)">
+                        <label for="title" class="text-warning"><?=Arr::get($errors, 'title')?></label>
                       </div>
                     </div><!-- /.form-group -->
-                    <!--<div class="form-group">
-                      <label for="feature" class="col-sm-2 control-label">Feature</label>
+                    <div class="form-group">
+                      <label for="location" class="col-sm-2 control-label">Video Link</label>
                       <div class="col-sm-10">
-                      <label for="feature" class="text-warning"><?=Arr::get($errors, 'feature'); ?></label>
-                        <input type="text" name="feature" class="form-control" value="<?=Arr::get($values, 'title')?>" id="feature" placeholder="Feature on page" />
+                        <input type="text" name="location" class="form-control" value="<?=Arr::get($values, 'location')?>" id="location" placeholder="Youtube video link if any" />
+                        <label for="location" class="text-warning"><?=Arr::get($errors, 'location'); ?></label>
                       </div>
-                    </div>--><!-- /.form-group -->
+                    </div><!-- /.form-group -->
                   <div class="form-group">
                     <label for="content" class="col-sm-2 control-label">Content</label>
                     <div class="col-sm-10">
-                    <label for="content" class="text-warning"><?=Arr::get($errors, 'content')?></label>
                       <div class="box">
                       <div class="box-header">
                         <!-- tools box -->
@@ -58,13 +57,14 @@
                           <textarea class="wysiwygtextarea" name="content" placeholder="Place your service content here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"><?=Arr::get($values, 'content')?></textarea>
                       </div>
                     </div>
+                      <label for="content" class="text-warning"><?=Arr::get($errors, 'content')?></label>
                     </div>
                   </div><!-- /.form-group -->
                   <div class="form-group">
                     <label for="file" class="col-sm-2 control-label">Picture</label>
                     <div class="col-sm-10">
-                    <label for="file" class="text-warning"><?=Arr::get($errors, 'file'); ?></label>
                       <input class="form-control" type="file" value="<?=Arr::get($values, 'file'); ?>" id="file" name="file">
+                      <label for="file" class="text-warning"><?=Arr::get($errors, 'file'); ?></label>
                     </div>
                   </div><!-- /.form-group -->
                   <div class="form-group">

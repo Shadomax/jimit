@@ -1,56 +1,34 @@
-<div id="jssor_1" style="position: relative; margin: 0 auto; top: 0px; left: 0px; width: 1300px; height: 500px; overflow: hidden; visibility: hidden;">
-        <!-- Loading Screen -->
-        <div data-u="loading" style="position: absolute; top: 0px; left: 0px;">
-            <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block; top: 0px; left: 0px; width: 100%; height: 100%;"></div>
-            <div style="position:absolute;display:block;background:url('<?=url::base()?>media/upload/loading.gif') no-repeat center center;top:0px;left:0px;width:100%;height:100%;"></div>
-        </div>
-        <div class="slides" data-u="slides" style="cursor: default; position: relative; top: 0px; left: 0px; width: 1300px; height: 500px; overflow: hidden;">
-            <div data-p="225.00" style="display: none;">
-                <img data-u="image" src="<?=url::base()?>media/upload/red.jpg" />
-                <div  style="position: absolute; top: 30px; left: 30px; width: 480px; height: 120px; font-size: 50px; color: #ffffff; line-height: 60px;">TOUCH SWIPE SLIDER</div>
-                <div style="position: absolute; top: 300px; left: 30px; width: 480px; height: 120px; font-size: 30px; color: #ffffff; line-height: 38px;">Build your slider with anything, includes image, content, text, html, photo, picture</div>
-                <div data-u="caption" data-t="0" style="position: absolute; top: 100px; left: 600px; width: 445px; height: 300px;">
-                    <img src="img/c-phone.png" style="position: absolute; top: 0px; left: 0px; width: 445px; height: 300px;" />
-                    <img src="img/c-jssor-slider.png" data-u="caption" data-t="1" style="position: absolute; top: 70px; left: 130px; width: 102px; height: 78px;" />
-                    <img src="img/c-text.png" data-u="caption" data-t="2" style="position: absolute; top: 153px; left: 163px; width: 80px; height: 53px;" />
-                    <img src="img/c-fruit.png" data-u="caption" data-t="3" style="position: absolute; top: 60px; left: 220px; width: 140px; height: 90px;" />
-                    <img src="img/c-navigator.png" data-u="caption" data-t="4" style="position: absolute; top: -123px; left: 121px; width: 200px; height: 155px;" />
+<?php
+  $slides = ORM::factory('Slider')->where('deleted', '=', 'false')->order_by('sort', 'asc')->find_all();
+?>
+<div class="banner carousel slide" id="recommended-item-carousel" data-ride="carousel">
+      <div class="slides carousel-inner">
+        <?php $i = 0;
+          foreach ($slides as $slide) :?>
+        <div class="item <?=($i == 0) ? 'active' : '' ?>">
+          <img src="<?=@$slide->getPicture()?>" alt="<?=@$slide->header?>" />
+          <div class="banner_caption">
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="caption_inner animated fadeInUp">
+                    <h1><?=strip_tags($slide->header)?></h1>
+                    <p>
+                      <?=@Text::limit_words(strip_tags($slide->content), 25)?>
+                    </p>
+                    <a href="<?=$slide->link?>" target="_blank">Learn More</a>
+                  </div><!--end caption_inner-->
                 </div>
-                <div data-u="caption" data-t="5" style="position: absolute; top: 120px; left: 650px; width: 470px; height: 220px;">
-                    <img src="img/c-phone-horizontal.png" style="position: absolute; top: 0px; left: 0px; width: 470px; height: 220px;" />
-                    <div style="position: absolute; top: 4px; left: 45px; width: 379px; height: 213px; overflow: hidden;">
-                        <img src="img/c-slide-1.jpg" data-u="caption" data-t="6" style="position: absolute; top: 0px; left: 0px; width: 379px; height: 213px;" />
-                        <img src="img/c-slide-3.jpg" data-u="caption" data-t="7" style="position: absolute; top: 0px; left: 379px; width: 379px; height: 213px;" />
-                    </div>
-                    <img src="img/c-navigator-horizontal.png" style="position: absolute; top: 4px; left: 45px; width: 379px; height: 213px;" />
-                    <img src="img/c-finger-pointing.png" data-u="caption" data-t="8" style="position: absolute; top: 740px; left: 1600px; width: 257px; height: 300px;" />
-                </div>
-            </div>
-            <div data-p="225.00" style="display: none;">
-                <img data-u="image" src="<?=url::base()?>media/upload/dgresponsivewhateveryourbiz111.png" />
-                <div style="position: absolute; top: 30px; left: 30px; width: 480px; height: 120px; font-size: 50px; color: #ffffff; line-height: 60px;">TOUCH SWIPE SLIDER</div>
-                <div style="position: absolute; top: 300px; left: 30px; width: 480px; height: 120px; font-size: 30px; color: #ffffff; line-height: 38px;">Build your slider with anything, includes image, content, text, html, photo, picture</div>
-            </div>
-            <div data-p="225.00" style="display: none;">
-                <img data-u="image" src="<?=url::base()?>media/upload/digital_marketing_services_agency.jpg" />
-                <div style="position: absolute; top: 30px; left: 30px; width: 480px; height: 120px; font-size: 50px; color: #ffffff; line-height: 60px;">TOUCH SWIPE SLIDER</div>
-                <div style="position: absolute; top: 300px; left: 30px; width: 480px; height: 120px; font-size: 30px; color: #ffffff; line-height: 38px;">Build your slider with anything, includes image, content, text, html, photo, picture</div>
-            </div>
-            <div data-p="225.00" id="slid" style="display: none;">
-                <img data-u="image" src="<?=url::base()?>media/upload/seo11.png" />
-                <div style="position: absolute; top: 20px; left: 900px; width: 480px; height: 120px; font-size: 50px; color: #ffffff; line-height: 60px;">Our Approach</div>
-                <div style="position: absolute; top: 300px; left: 30px; width: 480px; height: 120px; font-size: 30px; color: #ffffff; line-height: 38px;">Build your slider with anything, includes image, content, text, html, photo, picture</div>
-            </div>
+              </div><!--end row-->
+            </div><!--end container-->
+          </div><!--end banner_caption-->
         </div>
-        <!-- Bullet Navigator -->
-        <div data-u="navigator" class="jssorb05" style="bottom:16px;right:16px;" data-autocenter="1">
-            <!-- bullet navigator item prototype -->
-            <div data-u="prototype" style="width:16px;height:16px;"></div>
-        </div>
-        <!-- Arrow Navigator -->
-        <span data-u="arrowleft" class="jssora22l" style="top:0px;left:12px;width:40px;height:58px;" data-autocenter="2"></span>
-        <span data-u="arrowright" class="jssora22r" style="top:0px;right:12px;width:40px;height:58px;" data-autocenter="2"></span>
-        <a href="http://www.jssor.com" style="display:none">Slideshow Maker</a>
-    </div>
-
-    <!-- #endregion Jssor Slider End -->
+        <?php $i++; endforeach; ?>
+      </div>
+      <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+        <img src="<?=URL::base()?>media/img/home/slider/prev.png">
+        </a>
+      <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+        <img src="<?=URL::base()?>media/img/home/slider/next.png">
+      </a>    
+    </div><!--end banner-->

@@ -1,6 +1,6 @@
 <?php
-	$action = Request::current()->action();
-	$nude = Request::current()->controller();
+	//$action = Request::current()->action();
+	//$nude = Request::current()->controller();
 /**			if($node=="about" && $action=="pages"){
 				$about="true";
 			}
@@ -31,43 +31,93 @@
 			} */
 ?>
 
-<!-- Collect the nav links, forms, and other content for toggling -->
-          <nav class="navbar navbar-inverse" role="banner">
-            <div class="container">
+<div class="topbar clearfix">
+      <div class="container">
+        <ul class="topbar-left">
+          <li class="phoneNo"><i class="fa fa-phone"></i>0123 45678910</li>
+          <li class="email-id hidden-xs hidden-sm"><i class="fa fa-envelope"></i>
+            <a href="mailto:info@yourdomain.com">info@yourdomain.com</a>
+          </li>
+        </ul>
+        <ul class="topbar-right">
+          <li class="hidden-xs"><a href="#"><i class="fa fa-twitter"></i></a></li>
+          <li class="hidden-xs"><a href="#"><i class="fa fa-facebook"></i></a></li>
+          <li class="hidden-xs"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+          <li class="hidden-xs"><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+          <li class="hidden-xs"><a href="#"><i class="fa fa-rss"></i></a></li>
+          <li class="dropdown top-search list-inline">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-search"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <form action="http://themes.iamabdus.com/royal/1.2/courses.html" method="post">
+                <input type="text" placeholder="Course Name" id="exampleInputEmail1" class="form-control">
+                <button class="btn btn-default commonBtn" type="submit">Search</button>
+              </form>
+            </ul>
+          </li>
+          <li class="dropdown language">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-globe"></i>EN
+            <i class="fa fa-caret-down"></i>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="active">
+                    <a href="#">English </a> 
+              </li>
+              <li><a href="<?=URL::site('fr/welcome')?>">French</a></li>
+              <!--<li><a href="#">Russian</a></li>
+              <li><a href="#">German</a></li>-->
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="header clearfix">
+      <nav class="navbar navbar-main navbar-default">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="header_inner">
+                <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html"><img src="<?=url::base()?>media/upload/logo.png" alt="logo"></a>
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand logo clearfix" href="<?=URL::site()?>"><img src="img/logo.png" alt="" class="img-responsive" /></a>
                 </div>
-        
-                <div class="collapse navbar-collapse navbar-right">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?=url::site()?>">Home</a></li>
-              <li class="dropdown">
-                <a href="<?=url::site('services')?>" data-target="<?=url::site('services')?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services <i class="fa fa-angle-down"></i></a>
-                <ul class="dropdown-menu">
-                <?php $service = ORM::factory('service')->where('status','=',1)->order_by('id','asc')->find_all();
-                  foreach ($service as $key => $s) : ?>
-                    <li><a href="<?=url::site('services/service/'.$s->id.'/'.url::title($s->title,'_'))?>"><?=$s->shortName?></a></li>
-                  <?php endforeach; ?>
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About Us <i class="fa fa-angle-down"></i></span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="<?=url::site('why-choose-us')?>">Why Choose Us</a></li>
-                  <li><a href="#">Careers</a></li>
-                  <li><a href="<?=url::site('meet-the-team')?>">Our Team</a></li>
-                  <li><a href="<?=url::site('client-support')?>">Client Support</a></li>
-                </ul>
-              </li>
-              <li class="hvr-bounce-to-bottom"><a href="<?=url::site('blog')?>">Blog</a></li>
-        <li class="hvr-bounce-to-bottom"><a href="<?=url::site('contact-us')?>">Contact Us</a></li>                        
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="main-nav">
+                  <ul class="nav navbar-nav navbar-right">
+                  <li class="active"><a href="<?=URL::site()?>">Home</a></li>
+                  <li >
+                    <a href="<?=URL::site('programs')?>" role="button">Programs</a>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About</a>
+                    <ul class="dropdown-menu">
+                      <li><a href="<?=URL::site('about')?>">About US</a></li>
+                      <li><a href="campus.html">Our Campus</a></li>
+                      <li><a href="<?=URL::site('contact')?>">Contact Us</a></li>
+                      <li><a href="<?=URL::site('privacy')?>">Privacy Policy</a></li>
                     </ul>
-                </div>
-            </div><!--/.container-->
-        </nav><!--/nav-->
+                  </li>
+                  <li>
+                    <a href="<?=URL::site('articles')?>" role="button">BLOG</a>
+                  </li>
+                  <li>
+                    <a href="<?=URL::site('events')?>" role="button">Events</a>
+                  </li>
+                  <li><a href="<?=URL::site('gallery')?>">Photo Gallery</a></li>
+                  </ul>
+                </div><!-- navbar-collapse -->
+              </div>
+            </div>
+          </div>
+        </div><!-- /.container -->
+      </nav><!-- navbar -->
+    </div>
