@@ -28,7 +28,7 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+            <span class="info-box-icon bg-red"><i class="fa fa fa-calendar"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Events</span>
@@ -45,7 +45,7 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-archive"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Articles</span>
@@ -104,7 +104,7 @@
                     foreach ($event_comments as $update) :?>
                   <tr>
                     <td><?=$update->id?></td>
-                    <td><a href="<?=URL::site('admin/events/').'/'.$update->id.'/'.URL::title($update->full_name,'_')?>"><?=$update->title?></a></td>
+                    <td><?=$update->event->title?></td>
                     <td><?=$update->name?></td>
                     <td><?=$update->comment?></td>
                   </tr>
@@ -153,8 +153,8 @@
                   <?php
                     foreach ($article_comments as $update) :?>
                   <tr>
-                    <td><a href="<?=URL::site('admin/events/').'/'.$update->id.'/'.URL::title($update->full_name,'_')?>"><?=$update->id?></a></td>
-                    <td><?=$update->title?></td>
+                    <td><?=$update->id?></td>
+                    <td><?=$update->article->title?></td>
                     <td><?=$update->name?></td>
                     <td><?=$update->comment?></td>
                   </tr>

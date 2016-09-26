@@ -6,12 +6,16 @@ class Model_Event_Comment extends ORM
 {
 	protected $_belongs_to = array(
 		'event' => array('model' => 'Event'),
+		'eventfr' => array(
+			'model' => 'Eventfr',
+			'foreign_key' => 'event_id',
+			),
 	);
 
 	public function getThumb()
 	{
 		if (empty($this->thumb)) {
-			return "http://placehold.it/100x100";
+			return url::base().'admin_assets/dist/img/avatar5.png';
 		} else {
 			return url::base()."media/upload/thumb/".$this->thumb;
 		}
@@ -20,7 +24,7 @@ class Model_Event_Comment extends ORM
 	public function getPicture()
 	{
 		if (empty($this->photo)) {
-			return "http://placehold.it/100x100";
+			return url::base().'admin_assets/dist/img/avatar5.png';
 		} else {
 			return url::base()."media/upload/".$this->photo;
 		}

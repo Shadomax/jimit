@@ -12,6 +12,14 @@ class Controller_Admin_User extends Controller_Authenticated
 		'delete' => array('login'),
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	public function action_index()
 	{
 		$this->template->title = "Admin Users ";
@@ -19,23 +27,43 @@ class Controller_Admin_User extends Controller_Authenticated
 			->bind('user', $user)
 			->bind('users', $users)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$count = ORM::factory('User')->count_all();
 		$user = Auth::instance()->get_user();
-		$users = ORM::factory('User')->where('deleted', '=', 'false')->order_by('id', 'asc')->find_all();
+		// count number of users
+		$total_user = ORM::factory('User')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_user,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+		
+		$users = ORM::factory('User')->where('deleted', '=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('id', 'asc')->find_all();
 		$this->template->user = $user;
 		$this->template->content = $view;
 	}
 
 	public function action_viewDeleted()
 	{
-		$users = ORM::factory('User')->where('deleted','=', 'true')->order_by('id','asc')->find_all();
+		// count number of users
+		$total_user = ORM::factory('User')->where('deleted', '=', 'true')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_user,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+
+		$users = ORM::factory('User')->where('deleted','=', 'true')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('id','asc')->find_all();
 		$view = view::factory('admin/admin_users/view_deleted')
 			->bind('user', $user)
 			->set('users', $users)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$user = Auth::instance()->get_user();
 		$count = ORM::factory('User')->where('deleted', '=', 'true')->count_all();
@@ -62,9 +90,9 @@ class Controller_Admin_User extends Controller_Authenticated
 			if ($validate->check()) {
 				$id = $this->request->param('id');
 				$user = ORM::factory('User', $id);
-				$password = Auth::instance()->hash($data['password']);
-				$user->password = $password;
-				$user->save();
+				$data['username'] = $user->username;
+				$data['email'] = $user->email;
+				$user->update_user($data, array('username', 'password', 'email',));
 				$success = "<strong>SUCCESS!!</strong><br /> User password has been changed successfully.";
 				Session::instance()->set('message', $success);
 				$this->redirect('admin/users', 302);

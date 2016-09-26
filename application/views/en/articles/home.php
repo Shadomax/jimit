@@ -4,7 +4,11 @@
 
                         <div class="col-xs-12 col-sm-8 post_left">
                             <div class="post_left_section post_left_border">
-
+                            <?php if (count($articles) == 0) :?>
+                                  <div class="alert alert-info" role="alert">
+                                    <strong>Heads up!</strong> No Articles to display
+                                  </div>
+                                <?php endif;?>
                                 <?php foreach ($articles as $article) :?>
                                 <div class="post">
                                     <div class="post_thumb">
@@ -46,9 +50,9 @@
                                 </div><!--end post-->
                             <?php endforeach;?>
 
-                                <ul class="pagination_section">
-                                    <li><a href="#">Older News</a></li>
-                                </ul><!--end pagination section-->
+                               <ul class="pagination">
+                                <?=$pagination?>
+                               </ul><!--end pagination section-->
                                 
                             </div><!--end post left section-->
                         </div><!--end post_left-->
@@ -61,6 +65,13 @@
                                         <div class="upcoming_events">
                                         <h3>Upcoming Events</h3>
                                         <ul>
+                                          <li>
+                                              <?php if (count($events) == 0) :?>
+                                                  <div class="alert alert-info" role="alert">
+                                                    <strong>Heads up!</strong> No upcoming events to display
+                                                  </div>
+                                                <?php endif;?>
+                                          </li>             
                                           <?php foreach ($events as $event) :
                                             $timestamp = strtotime($event->date);
                                           ?>

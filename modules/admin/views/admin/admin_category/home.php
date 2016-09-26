@@ -59,6 +59,7 @@
                     </tfoot>
                   </table>
                 </div><!-- /.box-body -->
+                <?=$pagination?>
               </div><!-- /.box -->
             </div>
           </div>

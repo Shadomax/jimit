@@ -150,24 +150,59 @@ Cookie::$salt = 'utranazacter7654RRFssrehMedam@3434';
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-/*Route::set('english', 'home-english(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+Route::set('fr-gallery', 'fr/gallery(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
 	->defaults(array(
-			'directory'		=> 'en',
-			'controller'	=> 'english',
+			'directory'		=> 'Fr',
+			'controller'	=> 'Gallery',
 			'index'			=> 'index',
 		));
 
-Route::set('french', 'home-french(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+Route::set('fr-contact', 'fr/contact(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
 	->defaults(array(
-			'directory'		=> 'fr',
-			'controller'	=> 'french',
+			'directory'		=> 'Fr',
+			'controller'	=> 'Contact',
 			'index'			=> 'index',
-		));*/
+		));
+
+Route::set('fr-about', 'fr/about(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+	->defaults(array(
+			'directory'		=> 'Fr',
+			'controller'	=> 'About',
+			'index'			=> 'index',
+		));
+
+Route::set('fr-article', 'fr/articles(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+	->defaults(array(
+			'directory'		=> 'Fr',
+			'controller'	=> 'Articles',
+			'index'			=> 'index',
+		));
+
+Route::set('fr-event', 'fr/events(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+	->defaults(array(
+			'directory'		=> 'Fr',
+			'controller'	=> 'Events',
+			'index'			=> 'index',
+		));
+
+Route::set('fr-program', 'fr/programs(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+	->defaults(array(
+			'directory'		=> 'Fr',
+			'controller'	=> 'Programs',
+			'index'			=> 'index',
+		));
+
+Route::set('fr-home', 'fr/home(/<action>(/<id>(/<optional>)))', array('id' => '[0-9]++', 'optional' => '.*'))
+	->defaults(array(
+			'directory'		=> 'Fr',
+			'controller'	=> 'Welcome',
+			'index'			=> 'index',
+		));
 
 Route::set('default', '(<controller>(/<action>(/<id>(/<optional>))))', array('id' => '[0-9]++', 'optional' => '.*'))
 	->defaults(array(
 		'directory'		=> 'En',
-		'controller' => 'Welcome',
+		'controller' => 'Home',
 		'action'     => 'index',
 	));
 

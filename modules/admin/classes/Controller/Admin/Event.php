@@ -19,17 +19,34 @@ class Controller_Admin_Event extends Controller_Authenticated
 	'profile' => array('login'),
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	public function action_index()
 	{
 		$user = Auth::instance()->get_user();
-		$events = ORM::factory('Event')->where('deleted','=', 'false')->order_by('sort','asc')->find_all();
+		// count number of events
+		$total_event = ORM::factory('Event')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_event,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+		$events = ORM::factory('Event')->where('deleted','=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort','asc')->find_all();
 		//get the success message if any
 		$message = Session::instance()->get_once('message');
 		View::factory()->set_global('message', $message);
 		$view = View::factory('admin/admin_events/home')
 			->bind('user', $user)
 			->set('events', $events)
-			->bind('count', $count);
+			->bind('count', $count)
+			->bind('pagination', $pagination);
 		$count = ORM::factory('Event')->where('deleted', '=', 'false')->count_all();
 		$this->template->user = $user;
 		$this->template->title = "Admin Events ";
@@ -40,14 +57,23 @@ class Controller_Admin_Event extends Controller_Authenticated
 	public function action_viewDeleted()
 	{
 		$user = Auth::instance()->get_user();
-		$events = ORM::factory('Event')->where('deleted','=', 'true')->order_by('sort','asc')->find_all();
+		// count number of events
+		$total_event = ORM::factory('Event')->where('deleted', '=', 'true')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_event,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+		$events = ORM::factory('Event')->where('deleted','=', 'true')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort','asc')->find_all();
 		//get the success message if any
 		$message = Session::instance()->get_once('message');
 		View::factory()->set_global('message', $message);
 		$view = View::factory('admin/admin_events/view_deleted')
 			->bind('user', $user)
 			->set('events', $events)
-			->bind('count', $count);
+			->bind('count', $count)
+			->bind('pagination', $pagination);
 		$count = ORM::factory('Event')->where('deleted', '=', 'true')->count_all();
 		$this->template->user = $user;
 		$this->template->title = "Admin Deleted Events ";
@@ -58,14 +84,23 @@ class Controller_Admin_Event extends Controller_Authenticated
 	public function action_deletedComments()
 	{
 		$user = Auth::instance()->get_user();
-		$comments = ORM::factory('Event_Comment')->where('deleted','=', 'true')->order_by('id','asc')->find_all();
+		// count number of comments
+		$total_comment = ORM::factory('Event_Comment')->where('deleted', '=', 'true')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_comment,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+		$comments = ORM::factory('Event_Comment')->where('deleted','=', 'true')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('id','asc')->find_all();
 		//get the success message if any
 		$message = Session::instance()->get_once('message');
 		View::factory()->set_global('message', $message);
 		$view = View::factory('admin/admin_events/deleted_comments')
 			->bind('user', $user)
 			->set('comments', $comments)
-			->bind('count', $count);
+			->bind('count', $count)
+			->bind('pagination', $pagination);
 		$count = ORM::factory('Event_Comment')->where('deleted', '=', 'true')->count_all();
 		$this->template->user = $user;
 		$this->template->title = "Admin Event Deleted Comments";
@@ -77,12 +112,21 @@ class Controller_Admin_Event extends Controller_Authenticated
 	{
 		$user = Auth::instance()->get_user();
 		$id = $this->request->param('id');
-		$comments = ORM::factory('Event_Comment')->where('deleted', '=', 'false')->find_all();
+		// count number of comments
+		$total_comment = ORM::factory('Event_Comment')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_comment,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+		$comments = ORM::factory('Event_Comment')->where('deleted', '=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->find_all();
 		$view = View::factory('admin/admin_events/all_comments')
 			->bind('user', $user)
 			->bind('comments', $comments)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$count = ORM::factory('Event_Comment')->where('deleted', '=', 'false')->count_all();
 		$this->template->user = $user;
@@ -107,39 +151,12 @@ class Controller_Admin_Event extends Controller_Authenticated
 			//lets validate the the posted data for correctness
 			$validate = Model_Event::getValidate($data);
 			if ($validate->check()) {
-						//if there were files uploaded, validate them
-		                if ($_FILES['file']['size'] > 0) {
-		                    $valFiles = Model_Event::validatePhoto($_FILES);
-		                    if ($valFiles->check()) {
-		                    	$image = $_FILES['file'];
-								$directory = Upload::$default_directory.'events/';
-								if ($file = Upload::save($image))
-						        {
-						        	$filename = 'event_'. uniqid(). '_' . $_FILES['file']['name'];
-									$filename = str_replace(" ", "_", $filename);
-
-						            Image::factory($file)
-						                ->save($directory.$filename);
-
-						            //save the file in db
-						            $data['photo'] = $filename;
-						 
-						            // Delete the temporary file
-						            unlink($file);
-						        }
-		                    } else {
-		                        $errors = $valFiles->errors('general');
-		                    }
-		                }
-						
-						if (empty($errors)) {
-							$event->create_event($data);
-							//French event creation function call
-							$event_fr->create_event($data);
-							$message = "<strong>SUCCESS!!</strong><br/> The event has been added successfully.<br /> Edit the form below for French display.";
-							Session::instance()->set('message', $message);
-							$this->redirect('admin/events/fr_edit'.'/'.$event->id);
-						}
+				$event->create_event($data);
+				//French event creation function call
+				$event_fr->create_event($data);
+				$message = "<strong>SUCCESS!!</strong><br/> The event has been added successfully.<br /> Edit the form below for French display.";
+				Session::instance()->set('message', $message);
+				$this->redirect('admin/events/fr_edit'.'/'.$event->id);
 			} else {
 				$errors = $validate->errors('general');
 			}
@@ -169,45 +186,13 @@ class Controller_Admin_Event extends Controller_Authenticated
 					->rule('time', 'not_empty')
 					->rule('location', 'not_empty')
 					->rule('content', 'not_empty')
-					->rule('sort', 'not_empty');
+					->rule('sort', 'not_empty')
+					->rule('sort', 'numeric');
 				if ($validate->check()) {
-					if ($_FILES['file']['size'] > 0) {
-						$valFiles = Validation::factory($data)
-							->rule('file', 'Upload::not_empty')
-				            ->rule('file', 'Upload::size', array(':value', '4M'))
-				            ->rule('file', 'Upload::type', array(':value', array('jpeg','jpg','png','gif')))
-				            ->rule('file', 'Upload::valid');
-				        if ($valFiles->check()) {
-				         	$image = $_FILES['file'];
-							$directory = Upload::$default_directory.'events/';
-							//lets update the picture of the service
-							if ($file = Upload::save($image))
-					        {
-					        	$filename = 'event_'. uniqid(). '_' . $_FILES['file']['name'];
-								$filename = str_replace(" ", "_", $filename);
-
-					            Image::factory($file)
-					                ->save($directory.$filename);
-
-					            //save the file in db
-						        $data['photo'] = $filename;
-						        $event->update_photo($data);
-						        $event_fr->update_photo($data);
-					 
-					            // Delete the temporary file
-					            unlink($file);
-					        }
-				         } else {
-				         	$errors = $valFiles->errors('general');
-				         }
-					}
-					
-					if (empty($errors)) {
-						$event->update_event($data);
-	                    $message = "<strong>SUCCESS!!</strong><br/> The event information has been successfully updated.";
-	                    Session::instance()->set('message', $message);
-						$this->redirect('admin/events');
-					}
+					$event->update_event($data);
+	                $message = "<strong>SUCCESS!!</strong><br/> The event information has been successfully updated. Update the french section too.";
+	                Session::instance()->set('message', $message);
+					$this->redirect('admin/events/fr_edit'.'/'.$event->id);
 						
 				} else {
 					$errors = $validate->errors('general');

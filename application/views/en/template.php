@@ -29,43 +29,6 @@
 </head>
 <body>
 
-  <!--=== option Switcher ===-->
-  <i class="option-switcher-btn fa fa-gear hidden-xs"></i>
-  <div class="option-switcher animated fadeInRight">
-    <div class="option-swticher-header">
-      <div class="option-switcher-heading">Template Options</div>            
-      <div class="theme-close"><i class="fa fa-close"></i></div>
-    </div>
-    <div class="option-swticher-body">
-      <!-- Theme Colors -->
-      <ul class="list-unstyled">
-        <li class="theme-default theme-active" data-color="default" data-logo="default-logo"></li>
-        <li class="theme-grayGreen" data-color="gray-green" data-logo="grayGreen"></li>
-        <li class="theme-blueOrange" data-color="blue-orange" data-logo="blueOrange"></li>
-        <li class="theme-grayBlue last" data-color="gray-blue" data-logo="grayBlue"></li>
-      </ul>
-      <!-- Layout Styles -->
-      <div class="row no-col-space layoutStyle">
-        <div class="col-xs-6">
-          <a href="javascript:void(0);" class="btn-u  btn-block active-switcher-btn wide-layout-btn">Wide</a>                
-        </div>
-        <div class="col-xs-6">
-          <a href="javascript:void(0);" class="btn-u btn-block boxed-layout-btn">Boxed</a>
-        </div>                
-      </div> 
-      <!-- Header Styles -->
-      <div class="row no-col-space headerStyle">
-        <div class="col-xs-6">
-          <a href="javascript:void(0);" class="btn-u btn-block active-switcher-btn fixed-header-btn">Fixed Top</a>               
-        </div>
-        <div class="col-xs-6">
-          <a href="javascript:void(0);" class="btn-u  btn-block static-header-btn">Static Top</a>
-        </div>               
-      </div>              
-    </div>
-  </div>
-  <!--/option-switcher-->
-
   <div class="main_wrapper">
 
     <!-- Navigation -->

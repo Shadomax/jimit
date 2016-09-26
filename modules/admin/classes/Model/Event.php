@@ -46,7 +46,6 @@ class Model_Event extends ORM
 	{
 		$this->title = $data['name'];
 		$this->content = $data['content'];
-		$this->photo = @$data['photo'];
 		$this->location = $data['location'];
 		$this->date = $data['date'];
 		$this->time = $data['time'];

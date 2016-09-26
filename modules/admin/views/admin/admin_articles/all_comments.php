@@ -17,7 +17,7 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Event Comment Management</h3> <?php if ($count == 0) :?>
+                  <h3 class="box-title">Article Comment Management</h3> <?php if ($count == 0) :?>
               <span class="text-danger">No comments to display</span>
             <?php endif;?>
                 </div><!-- /.box-header -->
@@ -32,7 +32,7 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>Event</th>
+                        <th>Article</th>
                         <th>Posted By</th>
                         <th>Date/time</th>
                         <th>Action</th>
@@ -43,7 +43,7 @@
                           foreach ($comments as $comment) : ?>
                         <tr>
                           <td><?=$comment->id?></td>
-                          <td><?=$comment->event->title?></td>
+                          <td><?=$comment->article->title?></td>
                           <td><?=$comment->name?></td>
                           <td><?=date("Y-M-D", $comment->datetime)?></td>
                           <td>
@@ -55,7 +55,7 @@
                     <tfoot>
                       <tr>
                         <th>#</th>
-                        <th>Event</th>
+                        <th>Article</th>
                         <th>Posted By</th>
                         <th>Date/time</th>
                         <th>Action</th>

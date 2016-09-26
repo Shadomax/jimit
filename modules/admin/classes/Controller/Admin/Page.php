@@ -13,6 +13,14 @@ class Controller_Admin_Page extends Controller_Authenticated
 		'delete' => array('login'),
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	public function action_index()
 	{
 		$this->template->title = "Admin Pages";
@@ -20,10 +28,20 @@ class Controller_Admin_Page extends Controller_Authenticated
 			->bind('user', $suer)
 			->bind('pages', $pages)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$user = Auth::instance()->get_user();
-		$pages = ORM::factory('Page')->where('deleted', '=', 'false')->order_by('id','asc')->find_all();
+		// count number of pages
+		$total_page = ORM::factory('Page')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_page,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+
+		$pages = ORM::factory('Page')->where('deleted', '=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('id','asc')->find_all();
 		$count = ORM::factory('Page')->where('deleted', '=', 'false')->count_all();
 		$this->template->user = $user;
 		$this->template->content = $view;
@@ -36,10 +54,19 @@ class Controller_Admin_Page extends Controller_Authenticated
 			->bind('user', $suer)
 			->bind('pages', $pages)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$user = Auth::instance()->get_user();
-		$pages = ORM::factory('Page')->where('deleted', '=', 'true')->order_by('id','asc')->find_all();
+		// count number of pages
+		$total_page = ORM::factory('Page')->where('deleted', '=', 'true')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_page,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+		$pages = ORM::factory('Page')->where('deleted', '=', 'true')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('id','asc')->find_all();
 		$count = ORM::factory('Page')->where('deleted', '=', 'true')->count_all();
 		$this->template->user = $user;
 		$this->template->content = $view;
@@ -148,7 +175,7 @@ class Controller_Admin_Page extends Controller_Authenticated
 		            }
 		        }
 				if (empty($errors)) {
-					$page->addPage($data);
+					$page->updatePage($data);
 					$success = "<strong>SUCCESS!!</strong><br /> English page has been updated successfully. Please use the form below to update the French page.";
 					Session::instance()->set('message', $success);
 					//lets redirect to to the french edit action
@@ -182,7 +209,7 @@ class Controller_Admin_Page extends Controller_Authenticated
 				->rule('title', 'not_empty')
 				->rule('content', 'not_empty');
 			if ($validation->check()){
-				$page->addPage($data);
+				$page->updatePage($data);
 				$success = "<strong>SUCCESS!!</strong><br /> The French page has been successfully updated.";
 				Session::instance()->set('message', $success);
 				$this->redirect('admin/pages', 302);

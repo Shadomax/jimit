@@ -55,6 +55,16 @@
                       </div>
                     </div><!-- /.form-group -->
                     <div class="form-group">
+                      <label for="popular" class="col-sm-2 control-label">Popular </label>
+                      <div class="col-sm-10">
+                        <select class="form-control select2" id="popular" name="popular" style="width: 100%;">
+                          <option value="no" selected="selected">No</option>
+                          <option value="yes" >Yes</option>
+                        </select>
+                        <label for="popular" class="text-warning"><?=Arr::get($errors, 'popular'); ?></label>
+                      </div>
+                    </div><!-- /.form-group -->
+                    <div class="form-group">
                       <label for="fee" class="col-sm-2 control-label">Tution Fee <span class="text-danger">*</span></label>
                       <div class="col-sm-10">
                         <input type="text" class="form-control" value="<?=Arr::get($values, 'fee'); ?>" id="fee" placeholder="Program Tution Fee" name="fee">

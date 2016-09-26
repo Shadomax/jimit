@@ -22,6 +22,7 @@
                 <!-- form start -->
                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
                   <div class="box-body">
+                      <center><p class="help-block">Fill the form below. Fields with <span class="text-danger">*</span> are required.</p></center>
                   <?php if (!empty($errors)) : ?>
             <div class="alert alert-warning">
               <a href="#" class="close" aria-label="close" data-dismiss="alert">&times;</a>
@@ -29,21 +30,14 @@
             </div>
           <?php endif;?>
                     <div class="form-group">
-                      <label for="title" class="col-sm-2 control-label">Page Title</label>
+                      <label for="title" class="col-sm-2 control-label">Title <span class="text-danger">*</span></label>
                       <div class="col-sm-10">
                         <input type="text" name="title" class="form-control" value="<?=Arr::get($values, 'title')?>" id="title" placeholder="Page Title (e.g Home)">
                         <label for="title" class="text-warning"><?=Arr::get($errors, 'title')?></label>
                       </div>
                     </div><!-- /.form-group -->
-                    <div class="form-group">
-                      <label for="location" class="col-sm-2 control-label">Video Link</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="location" class="form-control" value="<?=Arr::get($values, 'location')?>" id="location" placeholder="Youtube video link if any" />
-                        <label for="location" class="text-warning"><?=Arr::get($errors, 'location'); ?></label>
-                      </div>
-                    </div><!-- /.form-group -->
                   <div class="form-group">
-                    <label for="content" class="col-sm-2 control-label">Content</label>
+                    <label for="content" class="col-sm-2 control-label">Content <span class="text-danger">*</span></label>
                     <div class="col-sm-10">
                       <div class="box">
                       <div class="box-header">

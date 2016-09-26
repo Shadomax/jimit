@@ -4,7 +4,7 @@
 					<img src="<?=$program->getPicture()?>" alt="" />
 					<div class="single_caption">
 						<h1><?=strip_tags($program->title)?></h1>
-						<h2>Diploma in <?=strip_tags($program->title)?></h2>
+						<h2><?=($program->certificate->name == 'HND') ? 'Diploma' : 'Bachelor' ; ?> in <?=strip_tags($program->title)?></h2>
 					</div><!--end single caption-->
 				</div><!--end single_banner_inner-->
 			</div><!--end container-->

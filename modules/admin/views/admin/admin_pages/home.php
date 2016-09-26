@@ -44,7 +44,7 @@
                       <td><?=$page->id?></td>
                       <td><?=$page->title?></td>
                       <td><?=Date('D-M',$page->datetime)?></td>
-                      <td><?=Text::limit_words($page->content,10)?></td>
+                      <td><?=Text::limit_words(strip_tags($page->content),10)?></td>
                       <td>
                         <a class="btn btn-primary" type="button" href="<?=URL::site('admin/pages/edit').'/'.$page->id.'/'.URL::title($page->title,'_')?>">Edit En</a> | <a class="btn btn-success" type="button" href="<?=URL::site('admin/pages/fr_edit').'/'.$page->id.'/'.URL::title($page->title,'_')?>">Edit Fr</a> | <a class="btn btn-danger delete_item" type="button" href="<?=URL::site('admin/pages/delete').'/'.$page->id?>" data-toggle="modal">Delete</a>
                       </td>
@@ -62,6 +62,7 @@
                     </tfoot>
                   </table>
                 </div><!-- /.box-body -->
+                <?=$pagination?>
               </div><!-- /.box -->
             </div>
           </div>

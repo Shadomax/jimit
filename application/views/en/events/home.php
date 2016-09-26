@@ -5,6 +5,11 @@
           <div class="col-xs-12 col-sm-8 post_left">
             <div class="upcoming_events event-col">
               <div class="row clearfix">
+                <?php if (count($events) == 0) :?>
+                <div class="alert alert-info" role="alert">
+                  <strong>Heads up!</strong> No events to display.
+                </div>
+              <?php endif;?>
               <?php foreach ($events as $event) : 
               $timestamp = strtotime($event->date);
               ?>
@@ -28,6 +33,9 @@
                 </div>
               <?php endforeach;?>
               </div><!-- row clearfix -->
+              <ul class="pagination">
+                <?=$pagination?>
+              </ul>
             </div>
           </div><!--end post_left-->
 
@@ -37,6 +45,13 @@
                 <div class="list_block">
                   <h3>Latest News</h3>
                   <ul>
+                    <li>
+                                              <?php if (count($articles) == 0) :?>
+                                                  <div class="alert alert-info" role="alert">
+                                                    <strong>Heads up!</strong> No recent articles to display
+                                                  </div>
+                                                <?php endif;?>
+                                          </li> 
                   <?php foreach ($articles as $article) :?>
                     <li>
                       <span class="rel_thumb">

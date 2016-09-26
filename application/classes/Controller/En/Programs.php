@@ -8,11 +8,17 @@ class Controller_En_Programs extends Controller_Application
 
 	public function action_index()
 	{
-		$programs = ORM::factory('Certificate_Program')->where('deleted', '=', 'false')->order_by('sort', 'asc')->find_all();
-		//$page = ORM::factory('page')->where('title','=', 'Services')->and_where('status','=',1)->find();
-		//$clients = ORM::factory('client')->where('feature','=','yes')->and_where('status','=',1)->order_by('sort','asc')->find_all();
+		// count number of programs
+		$total_program = ORM::factory('Certificate_Program')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_program,
+		    'items_per_page' => 12, // this will override the default set in your config
+		));
+		$programs = ORM::factory('Certificate_Program')->where('deleted', '=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort', 'asc')->find_all();
 		$view = new view($this->lang."/programs/home");
-		//$view->page = $page;
+		$view->pagination = $pagination;
 		//$view->clients = $clients;
 		$view->programs = $programs;
 		//$view->title = $page->title;

@@ -9,6 +9,13 @@
  */
 class Model_Eventfr extends ORM
 {
+	protected $_has_many = array(
+            'comments' => array(
+            	'model' => 'Event_Comment',
+            	'foreign_key' => 'event_id',
+            	),
+        );
+
 	public $_table_name = 'events_fr';
 
 	public function getPicture()
@@ -44,7 +51,6 @@ class Model_Eventfr extends ORM
 	{
 		$this->title = $data['name'];
 		$this->content = $data['content'];
-		$this->photo = @$data['photo'];
 		$this->location = $data['location'];
 		$this->date = $data['date'];
 		$this->time = $data['time'];

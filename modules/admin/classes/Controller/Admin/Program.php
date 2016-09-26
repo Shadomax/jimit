@@ -12,14 +12,32 @@ class Controller_Admin_Program extends Controller_Authenticated
 		'delete' => array('login'),
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	public function action_index()
 	{
-		$programs = ORM::factory('Certificate_Program')->where('deleted','=', 'false')->order_by('sort','asc')->find_all();
+		// count number of programs
+		$total_program = ORM::factory('Certificate_Program')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_program,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+
+		$programs = ORM::factory('Certificate_Program')->where('deleted','=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort','asc')->find_all();
 		$view = view::factory('admin/admin_programs/home')
 			->bind('user', $user)
 			->set('programs', $programs)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$user = Auth::instance()->get_user();
 		$count = ORM::factory('Certificate_Program')->where('deleted', '=', 'false')->count_all();
@@ -30,12 +48,22 @@ class Controller_Admin_Program extends Controller_Authenticated
 
 	public function action_viewDeleted()
 	{
-		$programs = ORM::factory('Certificate_Program')->where('deleted','=', 'true')->order_by('sort','asc')->find_all();
+		// count number of programs
+		$total_program = ORM::factory('Certificate_Program')->where('deleted', '=', 'true')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_program,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+
+		$programs = ORM::factory('Certificate_Program')->where('deleted','=', 'true')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort','asc')->find_all();
 		$view = view::factory('admin/admin_programs/view_deleted')
 			->bind('user', $user)
 			->set('programs', $programs)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$user = Auth::instance()->get_user();
 		$count = ORM::factory('Certificate_Program')->where('deleted', '=', 'true')->count_all();

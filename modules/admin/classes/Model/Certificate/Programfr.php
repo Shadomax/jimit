@@ -43,6 +43,7 @@ class Model_Certificate_Programfr extends ORM
 		$this->requirement = $data['requirement'];
 		$this->location = $data['location'];
 		$this->code = $data['code'];
+		$this->popular = $data['popular'];
 		$this->options = $data['option'];
 		$this->tution_fee = $data['fee'];
 		$this->photo = $data['photo'];
@@ -59,6 +60,7 @@ class Model_Certificate_Programfr extends ORM
 		$this->explore = $data['explore'];
 		$this->learn = $data['learn'];
 		$this->cost = $data['cost'];
+		$this->popular = $data['popular'];
 		$this->requirement = $data['requirement'];
 		$this->location = $data['location'];
 		$this->code = $data['code'];

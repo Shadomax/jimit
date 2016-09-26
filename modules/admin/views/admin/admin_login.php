@@ -38,11 +38,11 @@
           </div>
           <div class="row">
             <div class="col-xs-8">
-              <div class="checkbox icheck">
+              <!--<div class="checkbox icheck">
                 <label>
                   <input type="checkbox"> Remember Me
                 </label>
-              </div>
+              </div>-->
             </div><!-- /.col -->
             <div class="col-xs-4">
               <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
@@ -56,8 +56,8 @@
           <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using Google+</a>
         </div>--><!-- /.social-auth-links -->
 
-        <a href="<?=URL::site('admin/forgot')?>">I forgot my password</a><br>
-        <a href="<?=URL::site('admin/register')?>" class="text-center">Register a new membership</a>
+        <!--<a href="<?=URL::site('admin/forgot')?>">I forgot my password</a><br>
+        <a href="<?=URL::site('admin/register')?>" class="text-center">Register a new membership</a>-->
 
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->

@@ -16,7 +16,7 @@
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Events Management</h3> <?php if ($count == 0) :?>
+                  <h3 class="box-title">Events Management</h3> <a class="btn btn-primary btn-xs" type="button" href="<?=URL::site('admin/events/add')?>">Add</a> <?php if ($count == 0) :?>
               <span class="text-danger">No Events to display</span>
             <?php endif;?>
                 </div><!-- /.box-header -->
@@ -63,6 +63,7 @@
                     </tfoot>
                   </table>
                 </div><!-- /.box-body -->
+                <?=$pagination?>
               </div><!-- /.box -->
             </div>
           </div>

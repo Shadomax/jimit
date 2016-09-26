@@ -10,6 +10,14 @@ class Controller_Admin_Dashboard extends Controller_Authenticated
 	'dashboard' => array('login')
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	//get the date of today then multiply by seconds, minutes, and days to get time in a month
 	public $past_date;
 

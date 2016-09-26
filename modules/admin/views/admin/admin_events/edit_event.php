@@ -26,8 +26,8 @@
                 <?php endif ?>
                 <!-- form start -->
                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
-                  <h4 class="text-center">Use the form below to update event information. All Fields with <span class="text-danger">*</span> Are required.</h4>
                   <div class="box-body">
+                    <center><p class="help-block">Edit the form below. Fields with <span class="text-danger">*</span> are required.</p></center>
                     <div class="form-group">
                       <label for="name" class="col-sm-2 control-label">Name <span class="text-danger">*</span></label>
                       <div class="col-sm-10">
@@ -45,14 +45,14 @@
                     <div class="form-group">
                     <label for="date" class="col-sm-2 control-label">Date <span class="text-danger">*</span></label>
                     <div class="col-sm-10">
-                      <input type="date" class="form-control" value="<?=@$event->date?>" id="date" placeholder="Event Date" name="date">
+                      <input type="date" class="form-control" value="<?=@$event->date?>" id="date" placeholder="Event Date (format: mm/dd/yy)" name="date">
                       <label for="date" class="text-warning"><?=Arr::get($errors, 'date'); ?></label>
                     </div>
                   </div><!-- /.form-group -->
                   <div class="form-group">
                     <label for="time" class="col-sm-2 control-label">Time <span class="text-danger">*</span></label>
                     <div class="col-sm-10">
-                      <input type="time" class="form-control" value="<?=@$event->time?>" id="time" placeholder="Event Time" name="time" >
+                      <input type="time" class="form-control" value="<?=@$event->time?>" id="time" placeholder="Event Time (format: 01:20 AM)" name="time" >
                       <label for="time" class="text-warning"><?=Arr::get($errors, 'time'); ?></label>
                     </div>
                   </div><!-- /.form-group -->
@@ -71,15 +71,6 @@
                       </div>
                     </div>
                       <label for="content" class="text-warning"><?=Arr::get($errors, 'content'); ?></label>
-                    </div>
-                  </div><!-- /.form-group -->
-                  <div class="form-group">
-                    <label for="file" class="col-sm-2 control-label">Picture</label>
-                    <div class="col-sm-10">
-                      <img src="<?=@$event->getPicture()?>" class="img-thumbnail" style="width:100px; height:100px" alt="<?=@$event->title?>" />
-                      <p class="help-block">Change:</p>
-                      <input class="form-control" type="file" id="file" name="file">
-                      <label for="file" class="text-warning"><?=Arr::get($errors, 'file'); ?></label>
                     </div>
                   </div><!-- /.form-group -->
                   <div class="form-group">

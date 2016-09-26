@@ -43,16 +43,7 @@
             <div class="videoNine clearfix">
 
               <div class="videoArea clearfix">
-                <h3>Welcome To Royal College</h3>
-                <div class="row">
-                  <div class="col-lg-8 col-md-7 col-xs-12 videoLeft">
-                  <img src="img/home/video_image.jpg" data-video="https://www.youtube.com/embed/oOMcZoeEK0A?autoplay=1">
-                  </div><!-- videoLeft -->
-                  <div class="col-lg-4 col-md-5 col-xs-12 videoRight">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean consectetur ante volutpat sem aliquam lobortis. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus. Mauris porta fermentum volutpat. Praesent est sapien, tincidunt vel arcu vitae, mattis sollicitudin lectus.</p>
-                  <a href="about.html" class="btn btn-block learnBtn">Learn More</a>
-                  </div><!-- videoRight -->
-                </div><!-- row -->
+                <?=$page->content?>
               </div><!-- videoArea -->
 
               <div class="related_post_sec single_post">
@@ -84,28 +75,20 @@
           <div class="col-sm-4 col-xs-12">
             <div class="formArea clearfix">
               <div class="formTitle">
-                <h3>Find a Course</h3>
+                <h3>Find a Program</h3>
                 <p>Offered in small class sizes with great emphasis on the demands of the specification and exam technique.</p>
               </div><!-- formTitle -->
-              <form action="#" method="post">
+            <form action="<?=URL::site('home/search')?>" method="get">
                 <div class="selectBox clearfix">
-                  <select name="guiest_id1" id="guiest_id1">
-                    <option value="0">Location</option>
-                    <option value="1">Location_1</option>
-                    <option value="2">Location_2</option>
-                    <option value="3">Location_3</option>            
-                  </select>
-                </div><!-- selectBox -->
-                <div class="selectBox clearfix">
-                  <select name="guiest_id2" id="guiest_id2">
-                    <option value="0">Level</option>
-                    <option value="1">Level_1</option>
-                    <option value="2">Level_2</option>
-                    <option value="3">Level_3</option>            
+                  <select name="level" id="guiest_id2">
+                    <option value="0">Select Level</option>
+                    <?php foreach ($certificates as $key) :?>
+                      <option value="<?=$key->name?>"><?=$key->name?></option>
+                    <?php endforeach;?>            
                   </select>
                 </div><!-- selectBox -->
                 <div class="form-group">
-                  <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Course Name">
+                  <input type="text" class="form-control" id="program" name="program" placeholder="Program Name">
                 </div>
                 <button type="submit" class="btn btn-default btn-block commonBtn">Search</button>
               </form>
@@ -150,7 +133,7 @@
               </div>
               <div class="carousal_bottom">
                 <div class="thumb">
-                  <img src="img/about/SARA-LISBON_Art-Student.jpg" alt="" draggable="false">
+                  <img src="<?=URL::base()?>media/img/about/SARA-LISBON_Art-Student.jpg" alt="" draggable="false">
                 </div>                    
                 <div class="thumb_title">
                   <span class="author_name">Sara Lisbon</span>
@@ -179,42 +162,11 @@
       <div class="container">
         <div class="brand-slider flexslider">
           <ul class="slides">
+          <?php foreach ($partners as $partner) :?>
             <li>
-              <a href="#"><img src="img/home/brand1.png" /></a>
+              <a href="#"><img src="<?=$partner->getPicture()?>" /></a>
             </li>
-            <li>
-              <a href="#"><img src="img/home/brand2.png" /></a>
-            </li>
-            <li>
-              <a href="#"><img src="img/home/brand3.png" /></a>
-            </li>
-            <li>
-              <a href="#"><img src="img/home/brand4.png" /></a>
-            </li>
-            <li>
-              <a href="#"><img src="img/home/brand5.png" /></a>
-            </li>
-            <li>
-              <a href="#"><img src="img/home/brand1.png" /></a>
-            </li>
-            <li>
-              <a href="#"><img src="img/home/brand2.png" /></a>
-            </li>
-            <li>
-              <a href="#"><img src="img/home/brand3.png" /></a>
-            </li>
-            <li>
-              <a href="#"><img src="img/home/brand4.png" /></a>
-            </li>
-            <li>
-              <a href="#"><img src="img/home/brand5.png" /></a>
-            </li>
-            <li>
-              <a href="#"><img src="img/home/brand1.png" /></a>
-            </li>
-            <li>
-              <a href="#"><img src="img/home/brand2.png" /></a>
-            </li>
+      		<?php endforeach;?>
           </ul>
         </div>
       </div>

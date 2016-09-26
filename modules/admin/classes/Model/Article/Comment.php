@@ -10,14 +10,18 @@
 class Model_Article_Comment extends ORM
 {
 	protected $_belongs_to = array(
-		'article' => array('model' => 'Category_Article'),
-		'article' => array('model' => 'Category_Articlefr'),
+		'article' => array(
+			'model' => 'Category_Article',
+			'foreign_key' => 'category_article_id',),
+		'articlefr' => array(
+			'model' => 'Category_Articlefr',
+			'foreign_key' => 'category_article_id',),
 	);
 	
 	public function getThumb()
 	{
 		if (empty($this->thumb)) {
-			return "http://placehold.it/100x100";
+			return url::base().'admin_assets/dist/img/avatar5.png';
 		} else {
 			return url::base()."media/upload/thumb/".$this->thumb;
 		}
@@ -26,7 +30,7 @@ class Model_Article_Comment extends ORM
 	public function getPicture()
 	{
 		if (empty($this->photo)) {
-			return "http://placehold.it/100x100";
+			return url::base().'admin_assets/dist/img/avatar5.png';
 		} else {
 			return url::base()."media/upload/".$this->photo;
 		}

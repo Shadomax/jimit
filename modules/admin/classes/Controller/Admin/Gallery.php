@@ -17,6 +17,14 @@ class Controller_Admin_Gallery extends Controller_Authenticated
 		'delete' => array('login'),
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	//dispay all articles in the database
 	public function action_index()
 	{
@@ -26,10 +34,19 @@ class Controller_Admin_Gallery extends Controller_Authenticated
 			->bind('galleries', $galleries)
 			->bind('users', $users)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$count = ORM::factory('Gallery')->where('deleted', '=', 'false')->count_all();
-		$galleries = ORM::factory('Gallery')->where('deleted', '=', 'false')->order_by('sort', 'asc')->find_all();
+		// count number of galleries
+		$total_gallery = ORM::factory('Gallery')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_gallery,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+		$galleries = ORM::factory('Gallery')->where('deleted', '=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort', 'asc')->find_all();
 		$this->template->user = $user;
 		$this->template->content = $view;
 	}
@@ -43,10 +60,20 @@ class Controller_Admin_Gallery extends Controller_Authenticated
 			->bind('galleries', $galleries)
 			->bind('users', $users)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$count = ORM::factory('Gallery')->where('deleted', '=', 'true')->count_all();
-		$galleries = ORM::factory('Gallery')->where('deleted', '=', 'true')->order_by('sort', 'asc')->find_all();
+		// count number of galleries
+		$total_gallery = ORM::factory('Gallery')->where('deleted', '=', 'true')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_gallery,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+
+		$galleries = ORM::factory('Gallery')->where('deleted', '=', 'true')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort', 'asc')->find_all();
 		$this->template->user = $user;
 		$this->template->content = $view;
 	}

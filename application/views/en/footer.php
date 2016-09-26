@@ -4,19 +4,16 @@
 
           <div class="col-sm-3 col-xs-6">
             <ul class="menuLink clearfix">
-              <li><a href="about.html">About Royal College</a></li>
-              <li><a href="campus.html">About Campus</a></li>
-              <li><a href="stuff.html">Staff Members</a></li>
-              <li><a href="about.html">Why Choose Us?</a></li>
+              <li><a href="<?=URL::site('about')?>">About <?=Kohana::$config->load('design')->app_name?></a></li>
+              <li><a href="<?=URL::site('articles')?>">Blog</a></li>
+              <li><a href="<?=URL::site('events')?>">Events</a></li>
             </ul>
           </div><!-- col-sm-3 col-xs-6 -->
 
           <div class="col-sm-3 col-xs-6 borderLeft clearfix">
             <ul class="menuLink clearfix">
-              <li><a href="course-fullwidth.html">All Courses</a></li>
-              <li><a href="buying-steps.html">Admission</a></li>
-              <li><a href="photo-gallery3col.html">Photo Gallery</a></li>
-              <li><a href="international_students.html">International Students</a></li>
+              <li><a href="<?=URL::site('programs')?>">All Programs</a></li>
+              <li><a href="<?=URL::site('gallery')?>">Photo Gallery</a></li>
             </ul>
           </div><!-- col-sm-3 col-xs-6 -->
 
@@ -61,8 +58,7 @@
             <p>© <?=date('Y')?> Copyright <?=Kohana::$config->load('design')->app_name?> Design by <a href="<?=Kohana::$config->load('design')->address?>" target="_blank"><?=Kohana::$config->load('design')->designer?></a></p>
           </div><!-- col-sm-6 col-xs-12 -->
           <div class="col-sm-6 col-xs-12 privacy_policy">
-            <a href="contact-us.html">Contact us</a>
-            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="<?=URL::site('contact')?>">Contact us</a>
           </div><!-- col-sm-6 col-xs-12 -->
         </div><!-- row clearfix -->
       </div><!-- container -->

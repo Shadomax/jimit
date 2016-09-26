@@ -16,7 +16,9 @@ class Model_Category_Articlefr extends ORM
 	);
 
 	protected $_has_many = array(
-            'comments' => array('model' => 'Article_Comment'),
+            'comments' => array('model' => 'Article_Comment',
+            'foreign_key' => 'category_article_id',
+            ),
         );
 
 	public function labels()

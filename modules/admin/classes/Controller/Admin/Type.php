@@ -18,6 +18,14 @@ class Controller_Admin_Type extends Controller_Authenticated
 		'permenantDelete' => array('login'),
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	//dispay all members in the database
 	public function action_index()
 	{

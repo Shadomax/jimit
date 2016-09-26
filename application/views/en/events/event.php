@@ -39,7 +39,7 @@
                       <div class="post-content" data-role="post-content">
                         <div class="avatar">
                           <span class="user">
-                          <img alt="Avatar" src="<?=URL::base()?>media/img/news/avatar.png" />
+                          <img alt="Avatar" src="<?=$comment->getThumb()?>" />
                           </span>
                         </div>
                         <div class="post-body">

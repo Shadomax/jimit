@@ -28,21 +28,15 @@
                 <!-- form start -->
                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
                   <div class="box-body">
+                    <center><p class="help-block">Edit the form below for french display. Fields with <span class="text-danger">*</span> are required.</p></center>
                     <div class="form-group">
-                      <label for="title" class="col-sm-2 control-label">Page Title</label>
+                      <label for="title" class="col-sm-2 control-label">Title <span class="text-danger">*</span></label>
                       <div class="col-sm-10">
                         <input type="text" name="title" class="form-control" value="<?=$page->title?>" id="title" placeholder="Page Title">
                       </div>
                     </div><!-- /.form-group -->
-                    <div class="form-group">
-                      <label for="location" class="col-sm-2 control-label">Video Link</label>
-                      <div class="col-sm-10">
-                        <input type="text" name="location" class="form-control" value="<?=$page->youtube_link?>" id="location" placeholder="Youtube video link if any" />
-                        <label for="location" class="text-warning"><?=Arr::get($errors, 'location'); ?></label>
-                      </div>
-                    </div><!-- /.form-group -->
                   <div class="form-group">
-                    <label for="content" class="col-sm-2 control-label">Content</label>
+                    <label for="content" class="col-sm-2 control-label">Content <span class="text-danger">*</span></label>
                     <div class="col-sm-10">
                       <div class="box">
                       <div class="box-header">

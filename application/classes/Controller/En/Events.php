@@ -8,12 +8,22 @@ class Controller_En_Events extends Controller_Application
 	
 	public function action_index()
 	{
-		$articles = ORM::factory('Category_Article')->where('deleted', '=', 'false')->order_by('sort','desc')->find_all();
+		// count number of events
+		$total_event = ORM::factory('Event')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_event,
+		    'items_per_page' => 12, // this will override the default set in your config
+		));
+
+		$articles = ORM::factory('Category_Article')->where('deleted', '=', 'false')->limit(6)->order_by('sort','desc')->find_all();
 		$today = date('Y-m-d');
-		$events = ORM::factory('Event')->where('deleted', '=', 'false')->order_by('sort', 'desc')->limit(6)->find_all();
+		$events = ORM::factory('Event')->where('deleted', '=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort', 'desc')->find_all();
 		$view = View::factory($this->lang.'/events/home')
 			->bind('articles', $articles)
 			->bind('count', $count)
+			->bind('pagination', $pagination)
 			->bind('events', $events);
 		$this->template->title = "Events ";
 		$this->template->content = $view;

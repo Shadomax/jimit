@@ -3,6 +3,11 @@
         <div class="course-grid">
           <div class="about_inner clearfix">
             <div class="row">
+              <?php if (count($programs) == 0) :?>
+              <div class="alert alert-info" role="alert">
+                <strong>Heads up!</strong> No Programs to display.
+              </div>
+            <?php endif;?>
             <?php foreach ($programs as $program) :?>
               <div class="col-xs-6 col-sm-3">
                 <div class="aboutImage">
@@ -25,24 +30,7 @@
             </div><!-- row -->
 
             <ul class="pagination">
-              <li>
-                <a aria-label="Previous" href="#">
-                <span aria-hidden="true">Previous</span>
-                </a>
-              </li>
-              <li class="active"><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li><a href="#">6</a></li>
-              <li><a href="#">...</a></li>
-              <li><a href="#">38</a></li>
-              <li>
-                <a aria-label="Next" href="#">
-                <span aria-hidden="true">Next</span>
-                </a>
-              </li>
+              <?=$pagination?>
             </ul>
 
           </div><!-- about_inner -->

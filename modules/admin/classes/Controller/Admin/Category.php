@@ -13,6 +13,14 @@ class Controller_Admin_Category extends Controller_Authenticated
 		'delete' => array('login'),
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	public function action_index()
 	{
 		$user = Auth::instance()->get_user();
@@ -20,9 +28,19 @@ class Controller_Admin_Category extends Controller_Authenticated
 			->bind('user', $user)
 			->bind('categories', $categories)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
-		$categories = ORM::factory('Category')->where('deleted', '=', 'false')->order_by('sort', 'asc')->find_all();
+		$user = Auth::instance()->get_user();
+		// count number of categories
+		$total_category = ORM::factory('Category')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_category,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+		$categories = ORM::factory('Category')->where('deleted', '=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort', 'asc')->find_all();
 		$count = ORM::factory('Category')->where('deleted', '=', 'false')->count_all();
 		$this->template->title = 'Admin Category ';
 		$this->template->user = $user;
@@ -36,10 +54,19 @@ class Controller_Admin_Category extends Controller_Authenticated
 			->bind('user', $user)
 			->bind('categories', $categories)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$user = Auth::instance()->get_user();
-		$categories = ORM::factory('Category')->where('deleted', '=', 'true')->find_all();
+		// count number of categories
+		$total_category = ORM::factory('Category')->where('deleted', '=', 'true')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_category,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+		$categories = ORM::factory('Category')->where('deleted', '=', 'true')->offset($pagination->offset)->limit($pagination->items_per_page)->find_all();
 		$count = ORM::factory('Category')->where('deleted', '=', 'true')->count_all();
 		$this->template->title = 'Admin Deleted Category ';
 		$this->template->user = $user;

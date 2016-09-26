@@ -17,19 +17,37 @@ class Controller_Admin_Partner extends Controller_Authenticated
 		'delete' => array('login'),
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	//dispay all articles in the database
 	public function action_index()
 	{
+		// count number of partners
+		$total_partner = ORM::factory('Partner')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_partner,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+
 		$user = Auth::instance()->get_user();
 		$this->template->title = "Admin Partner ";
 		$view = view::factory('admin/admin_partners/home')
 			->bind('partners', $partners)
 			->bind('users', $users)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$count = ORM::factory('Partner')->where('deleted', '=', 'false')->count_all();
-		$partners = ORM::factory('Partner')->where('deleted', '=', 'false')->order_by('sort', 'asc')->find_all();
+		$partners = ORM::factory('Partner')->where('deleted', '=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort', 'asc')->find_all();
 		$this->template->user = $user;
 		$this->template->content = $view;
 	}
@@ -37,16 +55,26 @@ class Controller_Admin_Partner extends Controller_Authenticated
 	//display deleted partners
 	public function action_viewDeleted()
 	{
+		// count number of partners
+		$total_partner = ORM::factory('Partner')->where('deleted', '=', 'true')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_partner,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+		
 		$user = Auth::instance()->get_user();
 		$this->template->title = "Admin Deleted Partners ";
 		$view = view::factory('admin/admin_partners/view_deleted')
 			->bind('partners', $partners)
 			->bind('users', $users)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$count = ORM::factory('Partner')->where('deleted', '=', 'true')->count_all();
-		$partners = ORM::factory('Partner')->where('deleted', '=', 'true')->order_by('sort', 'asc')->find_all();
+		$partners = ORM::factory('Partner')->where('deleted', '=', 'true')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort', 'asc')->find_all();
 		$this->template->user = $user;
 		$this->template->content = $view;
 	}

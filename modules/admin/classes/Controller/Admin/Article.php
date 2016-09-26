@@ -12,14 +12,32 @@ class Controller_Admin_Article extends Controller_Authenticated
 		'delete' => array('login'),
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	public function action_index()
 	{
-		$articles = ORM::factory('Category_Article')->where('deleted','=', 'false')->order_by('sort','asc')->find_all();
+		// count number of articles
+		$total_article = ORM::factory('Category_Article')->where('deleted', '=', 'false')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_article,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+
+		$articles = ORM::factory('Category_Article')->where('deleted','=', 'false')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort','asc')->find_all();
 		$view = view::factory('admin/admin_articles/home')
 			->bind('user', $user)
 			->set('articles', $articles)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$user = Auth::instance()->get_user();
 		$count = ORM::factory('Category_Article')->where('deleted', '=', 'false')->count_all();
@@ -30,12 +48,22 @@ class Controller_Admin_Article extends Controller_Authenticated
 
 	public function action_viewDeleted()
 	{
-		$articles = ORM::factory('Category_Article')->where('deleted','=', 'true')->order_by('sort','asc')->find_all();
+		// count number of articles
+		$total_article = ORM::factory('Category_Article')->where('deleted', '=', 'true')->count_all();
+
+		// set-up the pagination
+		$pagination = Pagination::factory(array(
+		    'total_items' => $total_article,
+		    'items_per_page' => 100, // this will override the default set in your config
+		));
+
+		$articles = ORM::factory('Category_Article')->where('deleted','=', 'true')->offset($pagination->offset)->limit($pagination->items_per_page)->order_by('sort','asc')->find_all();
 		$view = view::factory('admin/admin_articles/view_deleted')
 			->bind('user', $user)
 			->set('articles', $articles)
 			->bind('count', $count)
-			->bind('message', $message);
+			->bind('message', $message)
+			->bind('pagination', $pagination);
 		$message = Session::instance()->get_once('message');
 		$user = Auth::instance()->get_user();
 		$count = ORM::factory('Category_Article')->where('deleted', '=', 'true')->count_all();

@@ -45,17 +45,6 @@
           <li class="hidden-xs"><a href="#"><i class="fa fa-google-plus"></i></a></li>
           <li class="hidden-xs"><a href="#"><i class="fa fa-youtube-play"></i></a></li>
           <li class="hidden-xs"><a href="#"><i class="fa fa-rss"></i></a></li>
-          <li class="dropdown top-search list-inline">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-search"></i>
-            </a>
-            <ul class="dropdown-menu">
-              <form action="http://themes.iamabdus.com/royal/1.2/courses.html" method="post">
-                <input type="text" placeholder="Course Name" id="exampleInputEmail1" class="form-control">
-                <button class="btn btn-default commonBtn" type="submit">Search</button>
-              </form>
-            </ul>
-          </li>
           <li class="dropdown language">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-globe"></i>EN
@@ -65,7 +54,7 @@
               <li class="active">
                     <a href="#">English </a> 
               </li>
-              <li><a href="<?=URL::site('fr/welcome')?>">French</a></li>
+              <li><a href="<?=URL::site('fr/home')?>">French</a></li>
               <!--<li><a href="#">Russian</a></li>
               <li><a href="#">German</a></li>-->
             </ul>
@@ -88,7 +77,7 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand logo clearfix" href="<?=URL::site()?>"><img src="img/logo.png" alt="" class="img-responsive" /></a>
+                  <a class="navbar-brand logo clearfix" href="<?=URL::site()?>"><img src="<?=URL::base()?>media/img/logo.png" alt="<?=Kohana::$config->load('design')->app_name?>" class="img-responsive" /></a>
                 </div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="main-nav">
@@ -97,22 +86,15 @@
                   <li >
                     <a href="<?=URL::site('programs')?>" role="button">Programs</a>
                   </li>
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About</a>
-                    <ul class="dropdown-menu">
-                      <li><a href="<?=URL::site('about')?>">About US</a></li>
-                      <li><a href="campus.html">Our Campus</a></li>
-                      <li><a href="<?=URL::site('contact')?>">Contact Us</a></li>
-                      <li><a href="<?=URL::site('privacy')?>">Privacy Policy</a></li>
-                    </ul>
-                  </li>
                   <li>
                     <a href="<?=URL::site('articles')?>" role="button">BLOG</a>
                   </li>
                   <li>
                     <a href="<?=URL::site('events')?>" role="button">Events</a>
                   </li>
-                  <li><a href="<?=URL::site('gallery')?>">Photo Gallery</a></li>
+                  <li><a href="<?=URL::site('gallery')?>">Gallery</a></li>
+                  <li><a href="<?=URL::site('about')?>">About US</a></li>
+                  <li><a href="<?=URL::site('contact')?>">Contact Us</a></li>
                   </ul>
                 </div><!-- navbar-collapse -->
               </div>

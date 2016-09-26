@@ -100,7 +100,7 @@ class Model_User extends Model_Auth_User {
     public function getAvatar()
     {
         if (empty($this->avatar)) {
-            return "http://placehold.it/100x100";
+            return url::base().'admin_assets/dist/img/avatar.png';
         } else {
             return url::base().'media/images/users/avatar'.$this->avatar;
         }
@@ -110,7 +110,7 @@ class Model_User extends Model_Auth_User {
     public function getPicture()
     {
         if (empty($this->picture)) {
-            return "http://placehold.it/100x100";
+            return url::base().'admin_assets/dist/img/avatar.png';
         } else {
             return url::base().'media/images/users/'.$this->picture;
         }

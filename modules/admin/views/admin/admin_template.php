@@ -21,6 +21,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?=URL::site()?>admin_assets/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
      <!-- DataTables -->
     <link rel="stylesheet" href="<?=URL::site()?>admin_assets/plugins/datatables/dataTables.bootstrap.css">
+    <!-- Magnific Popup core CSS file -->
+    <link rel="stylesheet" href="<?=URL::site()?>admin_assets/plugins/magnific-popup/magnific-popup.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?=URL::site()?>admin_assets/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" type="text/css" href="<?=URL::site()?>admin_assets/custom/css/style.css">
@@ -75,13 +77,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <?=$footer?>
       </footer>
 
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
-        <?=$sidebar?>
-      </aside><!-- /.control-sidebar -->
-      <!-- Add the sidebar's background. This div must be placed
-           immediately after the control sidebar -->
-      <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
     <!-- REQUIRED JS SCRIPTS -->
@@ -110,6 +105,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
      <!-- DataTables -->
     <script src="<?=URL::site()?>admin_assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="<?=URL::site()?>admin_assets/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- Magnific Popup core JS file -->
+    <script src="<?=URL::site()?>admin_assets/plugins/magnific-popup/jquery.magnific-popup.js"></script>
     <script type="text/javascript" src="<?=URL::site()?>admin_assets/custom/js/script.js"></script>
     <!-- WYSIWYG js -->
     <!-- WYSIWYG js -->

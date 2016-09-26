@@ -29,10 +29,19 @@ class Model_Page extends ORM
 		$this->seo_title = $data['seo_title'];
 		$this->seo_description = $data['seo_description'];
 		$this->seo_keywords = $data['seo_keywords'];
-		$this->youtube_link = $data['location'];
 		$this->deleted = 'false';
 		$this->datetime = time();
 		$this->save();
+	}
+
+	public function updatePage($data)
+	{
+	   $this->title = $data['title'];
+	   $this->content = $data['content'];
+	   $this->seo_title = $data['seo_title'];
+	   $this->seo_description = $data['seo_description'];
+	   $this->seo_keywords = $data['seo_keywords'];
+	   $this->save();
 	}
 
 	//add photos to the page table

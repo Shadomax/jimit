@@ -12,13 +12,22 @@ class Controller_Admin_Teams extends Controller_Dev
 		'delete' => array('login'),
 	);
 
+	public function before()
+	{
+        $user = Auth::instance()->get_user();
+        View::factory()->set_global('user', $user);
+		parent::before();
+        //$this->_user_auth();
+	}
+
 	public function action_index()
 	{
 		$teams = ORM::factory('team')->where('deleted','=', 'false')->order_by('sort','asc')->find_all();
 		$view = view::factory('admin_teams/home')
 			->bind('user', $user)
 			->set('teams', $teams)
-			->bind('count', $count);
+			->bind('count', $count)
+			->bind('pagination', $pagination);
 		$user = Auth::instance()->get_user();
 		$count = ORM::factory('team')->where('deleted', '=', 'false')->count_all();
 		$this->template->user = $user;
